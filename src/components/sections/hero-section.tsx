@@ -1,0 +1,109 @@
+import Container from "../ui/container";
+import { colors } from "@/src/constants/colors";
+import { siteConfig } from "@/src/constants/site";
+
+
+export default function HeroSection() {
+  return (
+    <section
+      className="relative min-h-screen overflow-hidden"
+      style={{ backgroundColor: colors.background }}
+    >
+      <div className="absolute inset-0">
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        >
+          <source src="/videos/landing-section.mp4" type="video/mp4" />
+        </video>
+
+        <video
+          className="absolute inset-0 h-full w-full scale-105 object-cover opacity-35 blur-[1px]"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        >
+          <source src="/videos/landing-section.mp4#t=1.8" type="video/mp4" />
+        </video>
+      </div>
+
+      <div
+        className="absolute inset-0"
+        style={{ backgroundColor: colors.overlayDark }}
+      />
+
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(2,8,23,0.35), #020817)",
+        }}
+      />
+
+      <Container className="relative z-10 flex min-h-screen items-center justify-center">
+        <div className="max-w-3xl text-center">
+          <p
+            className="mb-3 text-sm font-medium uppercase tracking-[0.3em]"
+            style={{ color: colors.accentSoft }}
+            // style={{ color: colors.red }}
+          >
+            Premium Fireworks Experience
+          </p>
+
+          <h1
+            className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl"
+            style={{ color: colors.textPrimary }}
+          >
+            {siteConfig.name}
+          </h1>
+
+          <p
+            className="mx-auto mt-5 max-w-2xl text-sm leading-7 sm:text-base"
+            style={{ color: colors.textSecondary }}
+          >
+            {siteConfig.description}
+          </p>
+
+          <div className="mt-8">
+            <a
+              href="#fireworks"
+              className="inline-flex items-center gap-3 rounded-full px-8 py-3 text-[1.75rem] font-bold leading-none tracking-wide transition duration-200"
+              style={{
+                background:
+                  "linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08))",
+                backdropFilter: "blur(16px) saturate(140%)",
+                WebkitBackdropFilter: "blur(16px) saturate(140%)",
+                boxShadow:
+                  "inset 0 1px 0 rgba(255,255,255,0.35), 0 0 0 1px rgba(255,255,255,0.22), 0 10px 24px rgba(0,0,0,0.3)",
+                color: "#050505",
+              }}
+            >
+              {siteConfig.ctaLabel}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M7 17L17 7" />
+                <path d="M9 7h8v8" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
