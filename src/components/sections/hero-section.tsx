@@ -48,10 +48,10 @@ export default function HeroSection() {
         }}
       />
 
-      <Container className="relative z-10 flex min-h-screen items-center justify-center">
+      <Container className="relative z-10 flex min-h-screen items-center justify-center py-24 sm:py-28">
         <div className="max-w-3xl text-center">
           <p
-            className="mb-3 text-sm font-medium uppercase tracking-[0.3em]"
+            className="mb-3 text-[0.7rem] font-medium uppercase tracking-[0.24em] sm:text-sm sm:tracking-[0.3em]"
             style={{ color: colors.accentSoft }}
             // style={{ color: colors.red }}
           >
@@ -59,7 +59,7 @@ export default function HeroSection() {
           </p>
 
           <h1
-            className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl"
+            className="text-3xl font-bold leading-tight sm:text-5xl md:text-6xl"
             style={{ color: colors.textPrimary }}
           >
             {siteConfig.name}
@@ -75,7 +75,7 @@ export default function HeroSection() {
           <div className="mt-8">
             <a
               href="#fireworks"
-              className="inline-flex items-center gap-3 rounded-full px-8 py-3 text-[1.75rem] font-bold leading-none tracking-wide transition duration-200"
+              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-base font-bold leading-none tracking-wide transition duration-200 sm:gap-3 sm:px-7 sm:py-3 sm:text-[1.35rem]"
               style={{
                 background:
                   "linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08))",
@@ -90,7 +90,7 @@ export default function HeroSection() {
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
-                className="h-6 w-6"
+                className="h-5 w-5 sm:h-6 sm:w-6"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
