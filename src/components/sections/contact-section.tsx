@@ -213,7 +213,7 @@ export default function ContactSection() {
           />
         </div>
 
-        <div className="mt-12 grid items-start gap-10 sm:mt-14 md:mt-16 md:grid-cols-[0.95fr_1.05fr] md:gap-10 lg:mt-20 lg:gap-14 xl:gap-20">
+        <div className="mt-12 grid items-start gap-10 sm:mt-14 sm:grid-cols-2 sm:gap-8 md:mt-16 md:grid-cols-[0.95fr_1.05fr] md:gap-10 lg:mt-20 lg:gap-14 xl:gap-20">
           {/* Left Content */}
           <div className="w-full">
             <p className="max-w-[520px] text-[1rem] font-normal leading-[1.7] text-white sm:text-[1.05rem] md:text-[1.1rem] lg:text-[1.12rem]">
@@ -256,7 +256,7 @@ export default function ContactSection() {
           </div>
 
           {/* Right Form */}
-          <div className="w-full rounded-[1.4rem] border border-white/55 bg-[#0B1120] px-6 py-7 shadow-[0_0_45px_rgba(255,255,255,0.03)] sm:rounded-[1.7rem] sm:px-8 sm:py-8 md:max-w-[560px] md:justify-self-end md:px-9 lg:px-9 xl:px-10">
+          <div className="w-full rounded-[1.4rem] border border-white/55 bg-[#0B1120] px-6 py-7 shadow-[0_0_45px_rgba(255,255,255,0.03)] sm:max-w-[500px] sm:justify-self-end sm:rounded-[1.7rem] sm:px-7 sm:py-8 md:max-w-[560px] md:px-9 lg:px-9 xl:px-10">
             <h3 className="text-[1.3rem] font-semibold text-white sm:text-[1.45rem] md:text-[1.55rem]">
               Your Details
             </h3>

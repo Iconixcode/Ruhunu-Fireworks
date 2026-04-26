@@ -1,3 +1,4 @@
+import FooterSection from "../components/layout/footer";
 import Navbar from "../components/layout/navbar";
 import AboutSection from "../components/sections/about-section";
 import ContactSection from "../components/sections/contact-section";
@@ -13,6 +14,7 @@ export default function HomePage() {
       <FireworksSection />
       <AboutSection />
       <ContactSection />
+      <FooterSection />
     </main>
   );
 }
