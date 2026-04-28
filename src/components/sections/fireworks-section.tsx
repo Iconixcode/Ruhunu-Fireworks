@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -6,7 +6,6 @@ import Link from "next/link";
 import Container from "../ui/container";
 import FireworkProductCard from "../fireworks/product-card";
 import { heroProducts } from "@/src/constants/products";
-import { ArrowRight } from "lucide-react";
 
 const descriptions = [
   "A vibrant aerial firework that blooms into colorful, flower-like bursts, creating a lively and beautiful display in the night sky.",
@@ -158,10 +157,9 @@ export default function FireworksSection() {
 
               <Link
                 href="/products"
-                className="mt-8 inline-flex h-[62px] w-[210px] items-center justify-center gap-2 rounded-lg bg-white text-xl tracking-wide text-black transition-all duration-300 hover:-translate-y-3 hover:bg-grey-900"
+                className="mt-8 inline-flex h-[62px] w-[210px] items-center justify-center rounded-lg bg-white text-xl tracking-wide text-black transition-opacity hover:opacity-90"
               >
-                View all 
-                <ArrowRight size={20} className="text-black" />
+                Explore
               </Link>
             </div>
 
