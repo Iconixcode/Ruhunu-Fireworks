@@ -1,10 +1,11 @@
- "use client";
+﻿ "use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 import Container from "../ui/container";
 import FireworkProductCard from "../fireworks/product-card";
+import { colors } from "@/src/constants/colors";
 import { heroProducts } from "@/src/constants/products";
 
 const descriptions = [
@@ -13,6 +14,17 @@ const descriptions = [
   "A powerful aerial firework that delivers rapid, high-energy bursts with bright flashes and crackling effects in the sky.",
   "A ground fountain firework that sprays colorful sparks in a fan shape, inspired by a peacock's vibrant feathers.",
 ];
+
+const arrowAnimationStyle = `
+  @keyframes moveArrow {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(6px); }
+  }
+  .arrow-animate {
+    animation: moveArrow 1.5s ease-in-out infinite;
+    display: inline-block;
+  }
+`;
 
 export default function FireworksSection() {
   const [current, setCurrent] = useState(0);
@@ -77,28 +89,28 @@ export default function FireworksSection() {
   return (
     <section
       id="fireworks"
-      className="relative overflow-hidden py-14 sm:py-20"
+      className="relative overflow-hidden scroll-mt-20 py-12 sm:py-16 lg:py-20"
       style={{ background: "#000211", minHeight: "750px" }}
     >
+      <style>{arrowAnimationStyle}</style>
       <Container className="relative">
-        <div className="absolute left-0 right-0 top-0 z-10 flex justify-center pt-2 sm:pt-4">
+        <div className="mb-10 text-center sm:mb-14">
           <h2
-            className="text-center font-semibold text-white select-none"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              fontSize: "clamp(50px, 6vw, 68px)",
-              lineHeight: 1.2,
-              letterSpacing: "0.01em",
-            }}
+            className="text-4xl font-semibold tracking-[0.01em] text-white sm:text-5xl lg:text-6xl"
+            style={{ fontFamily: "Poppins, sans-serif" }}
           >
             Fireworks
           </h2>
+
+          <div
+            className="mx-auto mt-4 h-px w-40 sm:w-45"
+            style={{
+              background: `linear-gradient(to right, transparent, ${colors.accentSoft}, transparent)`,
+            }}
+          />
         </div>
 
-        <div
-          className="relative pt-24 sm:pt-28 lg:pt-32"
-          style={{ minHeight: "680px" }}
-        >
+        <div className="relative" style={{ minHeight: "580px" }}>
           <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
             <div className="relative z-10">
               <div className="overflow-hidden" style={{ height: "136px" }}>
@@ -157,9 +169,22 @@ export default function FireworksSection() {
 
               <Link
                 href="/products"
-                className="mt-8 inline-flex h-[62px] w-[210px] items-center justify-center rounded-lg bg-white text-xl tracking-wide text-black transition-opacity hover:opacity-90"
+                className="mt-8 inline-flex h-[56px] w-[155px] items-center justify-center gap-2 rounded-lg bg-white text-base tracking-wide text-black transition-opacity hover:opacity-90"
               >
-                Explore
+                View More
+                <svg
+                  className="arrow-animate h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
               </Link>
             </div>
 
@@ -200,7 +225,7 @@ export default function FireworksSection() {
           </div>
         </div>
 
-        <div className="absolute bottom-2 left-0 right-0 z-20 flex justify-center gap-4 sm:bottom-5">
+        <div className="absolute bottom-0 left-0 right-0 z-20 flex justify-center gap-2 sm:bottom-1">
           {heroProducts.map((_, index) => (
             <button
               key={index}
