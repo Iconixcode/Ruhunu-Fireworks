@@ -6,6 +6,7 @@ import Link from "next/link";
 import Container from "../ui/container";
 import FireworkProductCard from "../fireworks/product-card";
 import { heroProducts } from "@/src/constants/products";
+import { ArrowRight } from "lucide-react";
 
 const descriptions = [
   "A vibrant aerial firework that blooms into colorful, flower-like bursts, creating a lively and beautiful display in the night sky.",
@@ -32,6 +33,8 @@ export default function FireworksSection() {
       setTextVisible(true);
     }, 300);
   };
+
+  const getSlideIndex = (idx: number) => idx % heroProducts.length;
 
   useEffect(() => {
     timerRef.current = setInterval(() => {
@@ -155,9 +158,10 @@ export default function FireworksSection() {
 
               <Link
                 href="/products"
-                className="mt-8 inline-flex h-[62px] w-[210px] items-center justify-center rounded-lg bg-white text-xl tracking-wide text-black transition-opacity hover:opacity-90"
+                className="mt-8 inline-flex h-[62px] w-[210px] items-center justify-center gap-2 rounded-lg bg-white text-xl tracking-wide text-black transition-all duration-300 hover:-translate-y-3 hover:bg-grey-900"
               >
-                Explore
+                View all 
+                <ArrowRight size={20} className="text-black" />
               </Link>
             </div>
 
@@ -175,6 +179,7 @@ export default function FireworksSection() {
                   <div
                     key={`${product.id}-${index}`}
                     className="transition-all duration-500"
+                    onMouseEnter={() => goToSlide(getSlideIndex(index))}
                     style={{
                       transform: index === current ? "scale(1)" : "scale(0.88)",
                       opacity:

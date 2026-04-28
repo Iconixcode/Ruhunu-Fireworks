@@ -48,8 +48,8 @@ export default function FireworkProductCard({
         className="absolute"
         style={
           isLarge
-            ? { right: "20px", top: "140px", width: "160px", height: "160px" }
-            : { right: "10px", top: "60px", width: "90px", height: "90px" }
+            ? { right: "20px", bottom: "60px", width: "160px", height: "160px" }
+            : { right: "10px", bottom: "22px", width: "90px", height: "90px" }
         }
       >
         <img
@@ -95,7 +95,7 @@ export default function FireworkProductCard({
         className="absolute flex items-center gap-1 rounded-full bg-white/10 transition-opacity hover:opacity-80"
         style={{
           left: isLarge ? "33px" : "14px",
-          bottom: isLarge ? "60px" : "22px",
+          top: isLarge ? "140px" : "60px",
           padding: isLarge ? "5px 14px" : "4px 10px",
         }}
       >
