@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -17,7 +17,9 @@ const descriptions = [
 export default function FireworksSection() {
   const [current, setCurrent] = useState(0);
   const [textVisible, setTextVisible] = useState(true);
+  const [disableSlideTransition, setDisableSlideTransition] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const circularProducts = [...heroProducts, heroProducts[0]];
 
   const goToSlide = (idx: number) => {
     if (idx === current) {
@@ -36,7 +38,15 @@ export default function FireworksSection() {
       setTextVisible(false);
 
       setTimeout(() => {
-        setCurrent((index) => (index + 1) % heroProducts.length);
+        setCurrent((index) => {
+          const isWrapping = index === heroProducts.length - 1;
+
+          if (isWrapping) {
+            setDisableSlideTransition(true);
+          }
+
+          return (index + 1) % heroProducts.length;
+        });
         setTextVisible(true);
       }, 300);
     }, 3800);
@@ -48,6 +58,20 @@ export default function FireworksSection() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!disableSlideTransition) {
+      return;
+    }
+
+    const frame = requestAnimationFrame(() => {
+      setDisableSlideTransition(false);
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+    };
+  }, [disableSlideTransition]);
+
   return (
     <section
       id="fireworks"
@@ -57,12 +81,12 @@ export default function FireworksSection() {
       <Container className="relative">
         <div className="absolute left-0 right-0 top-0 z-10 flex justify-center pt-2 sm:pt-4">
           <h2
-            className="text-center font-medium text-white select-none"
+            className="text-center font-semibold text-white select-none"
             style={{
               fontFamily: "Poppins, sans-serif",
-              fontSize: "clamp(46px, 7vw, 92px)",
+              fontSize: "clamp(50px, 6vw, 68px)",
               lineHeight: 1.2,
-              letterSpacing: "-0.01em",
+              letterSpacing: "0.01em",
             }}
           >
             Fireworks
@@ -75,26 +99,31 @@ export default function FireworksSection() {
         >
           <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
             <div className="relative z-10">
-              <div className="overflow-hidden" style={{ height: "115px" }}>
+              <div className="overflow-hidden" style={{ height: "136px" }}>
                 <div
-                  className="transition-transform duration-500 ease-in-out"
-                  style={{ transform: `translateY(-${current * 96}px)` }}
+                  style={{
+                    transform: `translateY(-${current * 136}px)`,
+                    transition: disableSlideTransition
+                      ? "none"
+                      : "transform 500ms ease-in-out",
+                  }}
                 >
                   {heroProducts.map((product) => (
                     <div
                       key={product.id}
                       style={{
-                        height: "96px",
+                        height: "136px",
                         display: "flex",
                         alignItems: "center",
                       }}
                     >
                       <span
-                        className="font-semibold leading-none text-white"
+                        className="block font-medium text-white whitespace-nowrap"
                         style={{
                           fontFamily: "Poppins, sans-serif",
-                          fontSize: "clamp(30px, 4.4vw, 62px)",
-                          letterSpacing: "-0.06em",
+                          fontSize: "clamp(20px, 2.5vw, 32px)",
+                          lineHeight: "1.14",
+                          letterSpacing: "-0.02em",
                         }}
                       >
                         {product.name}
@@ -112,7 +141,7 @@ export default function FireworksSection() {
                 }}
               >
                 <p
-                  className="max-w-[498px] font-semibold text-white/85"
+                  className="max-w-[498px] font-normal text-white/65"
                   style={{
                     fontFamily: "Poppins, sans-serif",
                     fontSize: "clamp(14px, 1.55vw, 24px)",
@@ -134,14 +163,17 @@ export default function FireworksSection() {
 
             <div className="overflow-hidden">
               <div
-                className="flex gap-4 transition-transform duration-500 ease-in-out sm:gap-5"
+                className="flex gap-4 sm:gap-5"
                 style={{
                   transform: `translateX(${-current * 228}px)`,
+                  transition: disableSlideTransition
+                    ? "none"
+                    : "transform 500ms ease-in-out",
                 }}
               >
-                {heroProducts.map((product, index) => (
+                {circularProducts.map((product, index) => (
                   <div
-                    key={product.id}
+                    key={`${product.id}-${index}`}
                     className="transition-all duration-500"
                     style={{
                       transform: index === current ? "scale(1)" : "scale(0.88)",
