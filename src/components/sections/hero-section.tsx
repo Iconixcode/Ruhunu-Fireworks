@@ -2,11 +2,11 @@ import Container from "../ui/container";
 import { colors } from "@/src/constants/colors";
 import { siteConfig } from "@/src/constants/site";
 
-
 export default function HeroSection() {
   return (
     <section
-      className="relative min-h-screen overflow-hidden"
+      id="home"
+      className="relative min-h-[100svh] overflow-hidden pt-[96px] sm:pt-[112px] lg:pt-[124px]"
       style={{ backgroundColor: colors.background }}
     >
       <div className="absolute inset-0">
@@ -44,22 +44,21 @@ export default function HeroSection() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(2,8,23,0.35), #020817)",
+            "linear-gradient(to bottom, rgba(0,0,0,0.34), rgba(2,8,23,0.35), #020817)",
         }}
       />
 
-      <Container className="relative z-10 flex min-h-screen items-center justify-center py-24 sm:py-28">
-        <div className="max-w-3xl text-center">
+      <Container className="relative z-10 flex min-h-[calc(100svh-96px)] items-center justify-center pb-16 sm:min-h-[calc(100svh-112px)] sm:pb-20 lg:min-h-[calc(100svh-124px)] lg:pb-24">
+        <div className="mx-auto w-full max-w-3xl text-center">
           <p
             className="mb-3 text-[0.7rem] font-medium uppercase tracking-[0.24em] sm:text-sm sm:tracking-[0.3em]"
             style={{ color: colors.accentSoft }}
-            // style={{ color: colors.red }}
           >
             Premium Fireworks Experience
           </p>
 
           <h1
-            className="text-3xl font-bold leading-tight sm:text-5xl md:text-6xl"
+            className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl"
             style={{ color: colors.textPrimary }}
           >
             {siteConfig.name}
@@ -75,7 +74,7 @@ export default function HeroSection() {
           <div className="mt-8">
             <a
               href="#fireworks"
-              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-base font-bold leading-none tracking-wide transition duration-200 sm:gap-3 sm:px-7 sm:py-3 sm:text-[1.35rem]"
+              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-base font-bold leading-none tracking-wide transition duration-200 hover:scale-[1.03] sm:gap-3 sm:px-7 sm:py-3 sm:text-[1.35rem]"
               style={{
                 background:
                   "linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08))",
