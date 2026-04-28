@@ -170,7 +170,7 @@ export default function FooterSection() {
             </div>
           </div>
 
-          <div className="pt-6 text-center">
+          <div className="pt-3 text-center">
             <p className="text-[0.85rem] font-normal text-white/70 sm:text-[0.95rem]">
               © 2026 FireGlow. All rights reserved.
             </p>

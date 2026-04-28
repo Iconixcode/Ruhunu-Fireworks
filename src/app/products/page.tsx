@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 
 import Navbar from "@/src/components/layout/navbar";
+import { FaWhatsapp } from "react-icons/fa6";
+import FooterSection from "@/src/components/layout/footer";
 import FireworkProductCard from "@/src/components/fireworks/product-card";
 import Container from "@/src/components/ui/container";
 import { products } from "@/src/constants/products";
@@ -31,7 +33,7 @@ export default function ProductsPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#000211] pb-16 pt-32 sm:pt-36">
+    <main className="min-h-screen bg-[#000211] pt-32 sm:pt-36">
       <Navbar />
 
       <Container>
@@ -96,15 +98,28 @@ export default function ProductsPage() {
             </p>
           </div>
 
-          <Link
-            href="/#contact"
-            className="flex shrink-0 items-center gap-3 rounded-md border border-white/25 bg-[#04134780] px-8 py-4 text-2xl text-white/80 transition-opacity hover:opacity-80"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            Contact us
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/#contact"
+              className="flex shrink-0 items-center gap-3 rounded-md border border-white/25 bg-[#04134780] px-8 py-4 text-2xl text-white/80 transition-opacity hover:opacity-80"
+              style={{ fontFamily: "Poppins, sans-serif" }}
+            >
+              Contact us
+            </Link>
+
+            <a
+              href="https://wa.me/94722293300"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-transparent text-white transition-opacity hover:opacity-80"
+            >
+              <FaWhatsapp size={48} color="white" />
+            </a>
+          </div>
         </div>
       </Container>
+      <FooterSection />
     </main>
   );
 }

@@ -95,7 +95,7 @@ export default function FireworkProductCard({
         className="absolute flex items-center gap-1 rounded-full bg-white/10 transition-opacity hover:opacity-80"
         style={{
           left: isLarge ? "33px" : "14px",
-          top: isLarge ? "140px" : "60px",
+          top: isLarge ? "140px" : "75px",
           padding: isLarge ? "5px 14px" : "4px 10px",
         }}
       >
