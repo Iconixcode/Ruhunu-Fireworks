@@ -14,9 +14,12 @@ export interface Product {
   galleryImages: { src: string; label: string }[];
 }
 
-export const products: Product[] = [
-  {
-    id: 1,
+type ProductContent = Omit<Product, "id">;
+
+type ProductCatalog = Record<number, ProductContent>;
+
+const productCatalog: ProductCatalog = {
+  1: {
     name: "Akasa Frame",
     shortDesc: "Wide frame-like bursts of vibrant colors across the night sky.",
     longDesc:
@@ -58,8 +61,7 @@ export const products: Product[] = [
       },
     ],
   },
-  {
-    id: 2,
+  2: {
     name: "Spring Flowers",
     shortDesc: "A vibrant aerial firework that blooms into colorful, flower-like bursts.",
     longDesc:
@@ -101,8 +103,7 @@ export const products: Product[] = [
       },
     ],
   },
-  {
-    id: 3,
+  3: {
     name: "Sparkling Flower Pots",
     shortDesc: "A classic ground firework that emits steady showers of colorful sparks.",
     longDesc:
@@ -144,8 +145,7 @@ export const products: Product[] = [
       },
     ],
   },
-  {
-    id: 4,
+  4: {
     name: "Witchcraft",
     shortDesc: "A powerful aerial firework with rapid, high-energy crackling bursts.",
     longDesc:
@@ -187,8 +187,7 @@ export const products: Product[] = [
       },
     ],
   },
-  {
-    id: 5,
+  5: {
     name: "Peacock Fountain",
     shortDesc: "A ground fountain that sprays colorful sparks in a peacock fan shape.",
     longDesc:
@@ -230,8 +229,7 @@ export const products: Product[] = [
       },
     ],
   },
-  {
-    id: 6,
+  6: {
     name: "Galaxy Storm",
     shortDesc: "A dramatic aerial barrage of multi-burst shells filling the sky.",
     longDesc:
@@ -273,6 +271,26 @@ export const products: Product[] = [
       },
     ],
   },
-];
+};
 
-export const heroProducts = [products[1], products[2], products[3], products[4]];
+const productIds = [1, 2, 3, 4, 5, 6] as const;
+
+export const products: Product[] = productIds.map((id) => ({
+  id,
+  ...productCatalog[id],
+}));
+
+export const heroProducts = products.slice(1, 5);
+
+export function getProductById(id: number) {
+  const product = productCatalog[id];
+
+  if (!product) {
+    return undefined;
+  }
+
+  return {
+    id,
+    ...product,
+  } satisfies Product;
+}

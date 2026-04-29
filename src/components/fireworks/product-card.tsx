@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import type { Product } from "@/src/constants/products";
+import type { Product } from "../../constants/products";
+
 
 interface ProductCardProps {
   product: Product;
@@ -18,7 +20,7 @@ export default function FireworkProductCard({
 
   return (
     <article
-      className="relative block flex-shrink-0 overflow-hidden rounded-[26px] border border-white/35 bg-[#080C17]"
+      className="relative block flex-shrink-0 overflow-hidden rounded-[26px] border border-white/35 bg-[#080C17] transition duration-300 hover:border-white/55 hover:shadow-[0_18px_45px_rgba(0,0,0,0.32)]"
       style={{
         width: isLarge ? "328px" : "210px",
         height: isLarge ? "418px" : "218px",
@@ -53,10 +55,13 @@ export default function FireworkProductCard({
             : { right: "10px", bottom: "22px", width: "90px", height: "90px" }
         }
       >
-        <img
+        <Image
           src={product.image}
           alt={product.name}
-          className="h-full w-full rounded-xl object-cover"
+          fill
+          sizes={isLarge ? "160px" : "90px"}
+          unoptimized
+          className="rounded-xl object-cover"
           style={{ mixBlendMode: "screen" }}
         />
       </div>

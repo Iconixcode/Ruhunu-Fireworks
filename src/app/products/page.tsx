@@ -2,43 +2,88 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import gsap from "gsap";
 
 import Navbar from "@/src/components/layout/navbar";
 import { FaWhatsapp } from "react-icons/fa6";
 import FooterSection from "@/src/components/layout/footer";
 import FireworkProductCard from "@/src/components/fireworks/product-card";
 import Container from "@/src/components/ui/container";
-import { products } from "@/src/constants/products";
+import { products } from "../../constants/products";
 
 export default function ProductsPage() {
+  const pageRef = useRef<HTMLElement | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const cards = gridRef.current?.querySelectorAll(".product-card-anim");
-    if (!cards) {
+    if (!pageRef.current) {
       return;
     }
 
-    cards.forEach((card, index) => {
-      const element = card as HTMLElement;
-      element.style.opacity = "0";
-      element.style.transform = "translateY(32px)";
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".products-intro-animate",
+        {
+          y: 24,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.75,
+          ease: "power3.out",
+          stagger: 0.12,
+          delay: 0.15,
+        },
+      );
 
-      setTimeout(() => {
-        element.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-        element.style.opacity = "1";
-        element.style.transform = "translateY(0)";
-      }, 100 + index * 80);
-    });
+      gsap.fromTo(
+        ".product-card-anim",
+        {
+          y: 34,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.65,
+          ease: "power3.out",
+          stagger: 0.08,
+          delay: 0.35,
+        },
+      );
+
+      gsap.fromTo(
+        ".products-cta-animate",
+        {
+          y: 28,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.75,
+          ease: "power3.out",
+          delay: 0.55,
+        },
+      );
+    }, pageRef);
+
+    return () => {
+      ctx.revert();
+    };
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#000211] pt-32 sm:pt-36">
+    <main
+      ref={pageRef}
+      className="min-h-screen bg-[#000211] pt-32 sm:pt-36"
+    >
       <Navbar />
 
       <Container>
         <p
-          className="mb-10 text-white"
+          className="products-intro-animate mb-10 text-white"
           style={{
             fontFamily: "Poppins, sans-serif",
             fontWeight: 400,
@@ -68,7 +113,7 @@ export default function ProductsPage() {
         </div>
 
         <div
-          className="mt-20 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center"
+          className="products-cta-animate mt-20 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center"
           style={{ maxWidth: "1176px", marginInline: "auto" }}
         >
           <div>
@@ -94,7 +139,8 @@ export default function ProductsPage() {
                 letterSpacing: "-0.01em",
               }}
             >
-              Contact us for product details and recommendations for your celebration.
+              Contact us for product details and recommendations for your
+              celebration.
             </p>
           </div>
 
@@ -119,6 +165,7 @@ export default function ProductsPage() {
           </div>
         </div>
       </Container>
+
       <FooterSection />
     </main>
   );

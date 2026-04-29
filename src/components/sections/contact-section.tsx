@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Mail, MapPin, Phone, MessageCircle } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Container from "../ui/container";
 import { colors } from "@/src/constants/colors";
@@ -88,6 +90,8 @@ function validateField(name: keyof FormValues, value: string) {
 }
 
 export default function ContactSection() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
   const [formValues, setFormValues] = useState<FormValues>(initialValues);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [submitState, setSubmitState] = useState<
@@ -98,6 +102,40 @@ export default function ContactSection() {
   const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
   const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
   const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+  useEffect(() => {
+    if (!sectionRef.current) {
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".contact-animate",
+        {
+          y: 32,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 72%",
+            once: true,
+          },
+        },
+      );
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -202,12 +240,13 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
+      ref={sectionRef}
       className="scroll-mt-20 w-full py-16 sm:py-20"
       style={{ backgroundColor: colors.background }}
     >
       <Container>
         <div className="mx-auto w-full max-w-[1240px]">
-          <div className="mb-10 text-center sm:mb-14">
+          <div className="contact-animate mb-10 text-center sm:mb-14">
             <h2 className="text-4xl font-semibold tracking-[0.01em] sm:text-5xl lg:text-6xl">
               Contact Us
             </h2>
@@ -222,7 +261,7 @@ export default function ContactSection() {
           <div className="mt-8 grid items-start gap-10 sm:mt-10 sm:grid-cols-2 sm:gap-8 md:mt-12 md:grid-cols-[0.95fr_1.05fr] md:gap-10 lg:mt-14 lg:gap-14 xl:gap-20">
             {/* Left Content */}
             <div className="w-full">
-              <p className="max-w-[520px] text-[1rem] font-normal leading-[1.7] text-white sm:text-[1.05rem] md:text-[1.1rem] lg:text-[1.12rem]">
+              <p className="contact-animate max-w-[520px] text-[1rem] font-normal leading-[1.7] text-white sm:text-[1.05rem] md:text-[1.1rem] lg:text-[1.12rem]">
                 Get in touch with us for inquiries, product details, or
                 assistance. We&apos;re here to help you choose the perfect
                 fireworks for your celebration
@@ -239,7 +278,7 @@ export default function ContactSection() {
                       href={item.href}
                       target={isExternalLink ? "_blank" : undefined}
                       rel={isExternalLink ? "noopener noreferrer" : undefined}
-                      className="group flex items-center gap-4 rounded-lg transition sm:gap-5"
+                      className="contact-animate group flex items-center gap-4 rounded-lg transition sm:gap-5"
                       aria-label={`${item.title}: ${item.value}`}
                     >
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D90000] transition group-hover:scale-105 sm:h-12 sm:w-12">
@@ -262,7 +301,7 @@ export default function ContactSection() {
             </div>
 
             {/* Right Form */}
-            <div className="w-full rounded-[1.4rem] border border-white/55 bg-[#0B1120] px-6 py-7 shadow-[0_0_45px_rgba(255,255,255,0.03)] sm:max-w-[500px] sm:justify-self-end sm:rounded-[1.7rem] sm:px-7 sm:py-8 md:max-w-[560px] md:px-9 lg:px-9 xl:px-10">
+            <div className="contact-animate w-full rounded-[1.4rem] border border-white/55 bg-[#0B1120] px-6 py-7 shadow-[0_0_45px_rgba(255,255,255,0.03)] sm:max-w-[500px] sm:justify-self-end sm:rounded-[1.7rem] sm:px-7 sm:py-8 md:max-w-[560px] md:px-9 lg:px-9 xl:px-10">
               <h3 className="text-[1.3rem] font-semibold text-white sm:text-[1.45rem] md:text-[1.55rem]">
                 Your Details
               </h3>
