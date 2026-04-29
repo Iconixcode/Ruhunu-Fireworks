@@ -17,8 +17,7 @@ export default function FireworkProductCard({
   const isLarge = size === "large";
 
   return (
-    <Link
-      href={`/products/${product.id}`}
+    <article
       className="relative block flex-shrink-0 overflow-hidden rounded-[26px] border border-white/35 bg-[#080C17]"
       style={{
         width: isLarge ? "328px" : "210px",
@@ -32,6 +31,7 @@ export default function FireworkProductCard({
             "radial-gradient(ellipse at 70% 100%, rgba(183,1,4,0.35) 0%, rgba(222,226,0,0.15) 60%, transparent 80%)",
         }}
       />
+
       <div
         className="pointer-events-none absolute"
         style={{
@@ -39,7 +39,8 @@ export default function FireworkProductCard({
           height: "40%",
           bottom: 0,
           left: 0,
-          background: "linear-gradient(0deg, rgba(70,41,220,0.18) 0%, transparent 100%)",
+          background:
+            "linear-gradient(0deg, rgba(70,41,220,0.18) 0%, transparent 100%)",
           filter: "blur(20px)",
         }}
       />
@@ -78,6 +79,7 @@ export default function FireworkProductCard({
         >
           {product.name}
         </h3>
+
         <p
           className="leading-snug text-white/70"
           style={{
@@ -91,7 +93,8 @@ export default function FireworkProductCard({
         </p>
       </div>
 
-      <span
+      <Link
+        href={`/products/${product.id}`}
         className="absolute flex items-center gap-1 rounded-full bg-white/10 transition-opacity hover:opacity-80"
         style={{
           left: isLarge ? "33px" : "14px",
@@ -101,12 +104,16 @@ export default function FireworkProductCard({
       >
         <span
           className="text-white"
-          style={{ fontFamily: "Poppins, sans-serif", fontSize: isLarge ? "12px" : "7px" }}
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: isLarge ? "12px" : "7px",
+          }}
         >
           Learn more
         </span>
+
         <ArrowRight size={isLarge ? 12 : 8} className="text-white" />
-      </span>
-    </Link>
+      </Link>
+    </article>
   );
 }
