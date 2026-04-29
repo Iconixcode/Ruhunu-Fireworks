@@ -1,8 +1,43 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+
 import Container from "../ui/container";
 import { colors } from "@/src/constants/colors";
 import { siteConfig } from "@/src/constants/site";
 
 export default function HeroSection() {
+  const heroContentRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!heroContentRef.current) {
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".hero-animate",
+        {
+          y: 28,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.14,
+          delay: 0.25,
+        },
+      );
+    }, heroContentRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
+
   return (
     <section
       id="home"
@@ -49,29 +84,32 @@ export default function HeroSection() {
       />
 
       <Container className="relative z-10 flex min-h-[calc(100svh-96px)] items-center justify-center pb-16 sm:min-h-[calc(100svh-112px)] sm:pb-20 lg:min-h-[calc(100svh-124px)] lg:pb-24">
-        <div className="mx-auto w-full max-w-3xl text-center">
+        <div
+          ref={heroContentRef}
+          className="mx-auto w-full max-w-3xl text-center"
+        >
           <p
-            className="mb-3 text-[0.7rem] font-medium uppercase tracking-[0.24em] sm:text-sm sm:tracking-[0.3em]"
+            className="hero-animate mb-3 text-[0.7rem] font-medium uppercase tracking-[0.24em] sm:text-sm sm:tracking-[0.3em]"
             style={{ color: colors.accentSoft }}
           >
             Premium Fireworks Experience
           </p>
 
           <h1
-            className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl"
+            className="hero-animate text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl"
             style={{ color: colors.textPrimary }}
           >
             {siteConfig.name}
           </h1>
 
           <p
-            className="mx-auto mt-5 max-w-2xl text-sm leading-7 sm:text-base"
+            className="hero-animate mx-auto mt-5 max-w-2xl text-sm leading-7 sm:text-base"
             style={{ color: colors.textSecondary }}
           >
             {siteConfig.description}
           </p>
 
-          <div className="mt-8">
+          <div className="hero-animate mt-8">
             <a
               href="#fireworks"
               className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-base font-bold leading-none tracking-wide transition duration-200 hover:scale-[1.03] sm:gap-3 sm:px-7 sm:py-3 sm:text-[1.35rem]"

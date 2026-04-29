@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Container from "../ui/container";
 import FireworkProductCard from "../fireworks/product-card";
-import { colors } from "@/src/constants/colors";
-import { heroProducts } from "@/src/constants/products";
+import { colors } from "../../constants/colors";
+import { heroProducts } from "../../constants/products";
 
 const descriptions = [
   "A vibrant aerial firework that blooms into colorful, flower-like bursts, creating a lively and beautiful display in the night sky.",
@@ -35,6 +37,7 @@ export default function FireworksSection() {
   const [textVisible, setTextVisible] = useState(true);
   const [disableSlideTransition, setDisableSlideTransition] = useState(false);
 
+  const sectionRef = useRef<HTMLElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const mobileScrollRef = useRef<HTMLDivElement | null>(null);
   const mobileCardRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -86,6 +89,40 @@ export default function FireworksSection() {
   const getSlideIndex = (idx: number) => idx % productCount;
 
   useEffect(() => {
+    if (!sectionRef.current) {
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".fireworks-animate",
+        {
+          y: 32,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 72%",
+            once: true,
+          },
+        },
+      );
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
+
+  useEffect(() => {
     timerRef.current = setInterval(() => {
       setTextVisible(false);
 
@@ -130,6 +167,7 @@ export default function FireworksSection() {
   return (
     <section
       id="fireworks"
+      ref={sectionRef}
       className="relative scroll-mt-20 overflow-hidden py-16 text-white sm:py-20 lg:py-24"
       style={{
         background:
@@ -140,7 +178,7 @@ export default function FireworksSection() {
 
       <Container className="relative">
         <div className="mx-auto w-full max-w-[1240px]">
-          <div className="mb-10 text-center sm:mb-14">
+          <div className="fireworks-animate mb-10 text-center sm:mb-14">
             <h2
               className="text-4xl font-semibold tracking-[0.01em] text-white sm:text-5xl lg:text-6xl"
               style={{ fontFamily: "Poppins, sans-serif" }}
@@ -158,7 +196,7 @@ export default function FireworksSection() {
 
           {/* Mobile and tablet layout */}
           <div className="lg:hidden">
-            <div className="text-center">
+            <div className="fireworks-animate text-center">
               <div className="flex min-h-[76px] items-center justify-center overflow-hidden sm:min-h-[84px]">
                 <h3
                   className="mx-auto max-w-[420px] text-2xl font-medium leading-tight text-white transition-all duration-300 sm:text-3xl"
@@ -214,7 +252,7 @@ export default function FireworksSection() {
 
             <div
               ref={mobileScrollRef}
-              className="mt-12 min-h-[230px] overflow-x-auto overflow-y-hidden pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="fireworks-animate mt-12 min-h-[230px] overflow-x-auto overflow-y-hidden pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               <div className="flex w-max gap-5 px-1">
                 {heroProducts.map((product, index) => (
@@ -239,7 +277,7 @@ export default function FireworksSection() {
               </div>
             </div>
 
-            <div className="mt-8 flex min-h-[14px] justify-center gap-2">
+            <div className="fireworks-animate mt-8 flex min-h-[14px] justify-center gap-2">
               {heroProducts.map((_, index) => (
                 <button
                   key={index}
@@ -264,7 +302,7 @@ export default function FireworksSection() {
           {/* Desktop layout */}
           <div className="hidden lg:block">
             <div className="grid min-h-[560px] gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
-              <div className="relative z-10">
+              <div className="fireworks-animate relative z-10">
                 <div className="overflow-hidden" style={{ height: "136px" }}>
                   <div
                     style={{
@@ -341,7 +379,7 @@ export default function FireworksSection() {
                 </Link>
               </div>
 
-              <div className="overflow-hidden">
+              <div className="fireworks-animate overflow-hidden">
                 <div
                   className="flex gap-5"
                   style={{
@@ -393,7 +431,7 @@ export default function FireworksSection() {
               </div>
             </div>
 
-            <div className="mt-10 flex min-h-[16px] justify-center gap-2">
+            <div className="fireworks-animate mt-10 flex min-h-[16px] justify-center gap-2">
               {heroProducts.map((_, index) => (
                 <button
                   key={index}
