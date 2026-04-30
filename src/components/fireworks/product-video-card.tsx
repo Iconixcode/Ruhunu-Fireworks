@@ -1,7 +1,7 @@
 "use client";
 
 import { Pause, Play } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ProductVideoCardProps = {
   title: string;
@@ -12,10 +12,43 @@ export default function ProductVideoCard({
   title,
   videoSrc,
 }: ProductVideoCardProps) {
+  const cardRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
 
-  const previewVideoSrc = `${videoSrc}#t=0.1`;
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
+  const previewVideoSrc = `${videoSrc}#t=0.5`;
+
+  useEffect(() => {
+    const card = cardRef.current;
+
+    if (!card) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+          observer.disconnect();
+        }
+      },
+      {
+        root: null,
+        rootMargin: "250px",
+        threshold: 0.1,
+      },
+    );
+
+    observer.observe(card);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const handleTogglePlay = async () => {
     const video = videoRef.current;
@@ -23,6 +56,8 @@ export default function ProductVideoCard({
     if (!video) {
       return;
     }
+
+    setShouldLoadVideo(true);
 
     if (video.paused) {
       try {
@@ -38,20 +73,30 @@ export default function ProductVideoCard({
   };
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-white bg-[#080C17]">
+    <article
+      ref={cardRef}
+      className="overflow-hidden rounded-2xl border border-white bg-[#080C17]"
+    >
       <div className="relative h-[232px] w-full overflow-hidden bg-black">
         <video
           ref={videoRef}
           className="h-full w-full object-cover"
           preload="metadata"
           playsInline
+          muted
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnded={() => setIsPlaying(false)}
         >
-          <source src={previewVideoSrc} type="video/mp4" />
+          {shouldLoadVideo ? (
+            <source src={previewVideoSrc} type="video/mp4" />
+          ) : null}
           Your browser does not support the video tag.
         </video>
+
+        {!shouldLoadVideo ? (
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),rgba(0,0,0,0.85))]" />
+        ) : null}
 
         <button
           type="button"

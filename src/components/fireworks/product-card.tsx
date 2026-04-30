@@ -4,8 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import type { Product } from "../../constants/products";
-
+import type { Product } from "@/src/constants/products";
 
 interface ProductCardProps {
   product: Product;
@@ -60,7 +59,6 @@ export default function FireworkProductCard({
           alt={product.name}
           fill
           sizes={isLarge ? "160px" : "90px"}
-          unoptimized
           className="rounded-xl object-cover"
           style={{ mixBlendMode: "screen" }}
         />

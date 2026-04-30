@@ -9,6 +9,7 @@ import { siteConfig } from "@/src/constants/site";
 
 export default function HeroSection() {
   const heroContentRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (!heroContentRef.current) {
@@ -38,45 +39,65 @@ export default function HeroSection() {
     };
   }, []);
 
+  useEffect(() => {
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch {
+        // Browser/network may delay autoplay. The fallback background still remains visible.
+      }
+    };
+
+    playVideo();
+  }, []);
+
   return (
     <section
       id="home"
       className="relative min-h-[100svh] overflow-hidden pt-[96px] sm:pt-[112px] lg:pt-[124px]"
       style={{ backgroundColor: colors.background }}
     >
-      <div className="absolute inset-0">
+      <div className="pointer-events-none absolute inset-0 bg-[#020817]">
         <video
+          ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover"
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           aria-hidden="true"
         >
           <source src="/videos/landing-section.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
         </video>
 
-        <video
-          className="absolute inset-0 h-full w-full scale-105 object-cover opacity-35 blur-[1px]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-hidden="true"
-        >
-          <source src="/videos/landing-section.mp4#t=1.8" type="video/mp4" />
-        </video>
+        <div
+          className="absolute inset-0 opacity-45"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(255,255,255,0.12), transparent 38%), radial-gradient(circle at 50% 45%, rgba(255,180,92,0.14), transparent 42%)",
+          }}
+        />
       </div>
 
       <div
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
         style={{ backgroundColor: colors.overlayDark }}
       />
 
       <div
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
             "linear-gradient(to bottom, rgba(0,0,0,0.34), rgba(2,8,23,0.35), #020817)",

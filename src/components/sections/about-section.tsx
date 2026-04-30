@@ -201,8 +201,10 @@ export default function AboutSection() {
                   src="/images/about-section.png"
                   alt="Ruhunu Fireworks collage"
                   fill
+                  loading="lazy"
+                  quality={75}
                   className="object-contain"
-                  sizes="(max-width: 430px) 320px, (max-width: 640px) 360px, (max-width: 1024px) 430px, 460px"
+                  sizes="(max-width: 430px) 320px, (max-width: 640px) 360px, (max-width: 768px) 430px, (max-width: 1024px) 430px, 460px"
                 />
               </div>
 
