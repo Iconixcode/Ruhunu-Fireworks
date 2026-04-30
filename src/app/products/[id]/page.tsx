@@ -21,6 +21,14 @@ type ProductDetailPageProps = {
   params: Promise<{ id: string }>;
 };
 
+export function generateStaticParams() {
+  return products.map((product) => ({
+    id: String(product.id),
+  }));
+}
+
+export const dynamicParams = false;
+
 export default async function ProductDetailPage({
   params,
 }: ProductDetailPageProps) {
@@ -59,8 +67,10 @@ export default async function ProductDetailPage({
                 alt={product.name}
                 width={222}
                 height={222}
-                unoptimized
-                className="rounded-2xl object-cover"
+                priority
+                sizes="222px"
+                className="rounded-2xl object-cover h-auto"
+                style={{ height: "auto" }}
               />
             </div>
 

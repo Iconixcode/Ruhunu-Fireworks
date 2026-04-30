@@ -7,8 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Container from "../ui/container";
 import FireworkProductCard from "../fireworks/product-card";
-import { colors } from "../../constants/colors";
-import { heroProducts } from "../../constants/products";
+import { colors } from "@/src/constants/colors";
+import { heroProducts } from "@/src/constants/products";
 
 const descriptions = [
   "A vibrant aerial firework that blooms into colorful, flower-like bursts, creating a lively and beautiful display in the night sky.",
@@ -46,7 +46,19 @@ export default function FireworksSection() {
   const activeIndex = current === productCount ? 0 : current;
   const circularProducts = [...heroProducts, heroProducts[0]];
 
+  const isMobileOrTablet = () => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return window.innerWidth < 1024;
+  };
+
   const scrollMobileCardIntoView = (index: number) => {
+    if (!isMobileOrTablet()) {
+      return;
+    }
+
     const scrollContainer = mobileScrollRef.current;
     const selectedCard = mobileCardRefs.current[index];
 
@@ -87,6 +99,19 @@ export default function FireworksSection() {
   };
 
   const getSlideIndex = (idx: number) => idx % productCount;
+
+  const handleDesktopCardClick = (
+    event: React.MouseEvent<HTMLDivElement>,
+    slideIndex: number,
+  ) => {
+    const target = event.target as HTMLElement;
+
+    if (target.closest("a") || target.closest("button")) {
+      return;
+    }
+
+    goToSlide(slideIndex);
+  };
 
   useEffect(() => {
     if (!sectionRef.current) {
@@ -399,7 +424,9 @@ export default function FireworksSection() {
                         role="button"
                         tabIndex={0}
                         className="cursor-pointer transition-all duration-500"
-                        onClick={() => goToSlide(slideIndex)}
+                        onClick={(event) =>
+                          handleDesktopCardClick(event, slideIndex)
+                        }
                         onKeyDown={(event) => {
                           if (event.key === "Enter" || event.key === " ") {
                             event.preventDefault();

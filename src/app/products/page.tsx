@@ -9,7 +9,7 @@ import { FaWhatsapp } from "react-icons/fa6";
 import FooterSection from "@/src/components/layout/footer";
 import FireworkProductCard from "@/src/components/fireworks/product-card";
 import Container from "@/src/components/ui/container";
-import { products } from "../../constants/products";
+import { products } from "@/src/constants/products";
 
 export default function ProductsPage() {
   const pageRef = useRef<HTMLElement | null>(null);
