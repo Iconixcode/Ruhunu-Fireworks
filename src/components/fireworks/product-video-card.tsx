@@ -2,6 +2,7 @@
 
 import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 
 type ProductVideoCardProps = {
   title: string;
@@ -14,11 +15,46 @@ export default function ProductVideoCard({
 }: ProductVideoCardProps) {
   const cardRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const playRequestIdRef = useRef(0);
+  const isPlayPendingRef = useRef(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
 
   const previewVideoSrc = `${videoSrc}#t=0.5`;
+
+  const waitForVideoReady = (video: HTMLVideoElement) => {
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      return Promise.resolve();
+    }
+
+    return new Promise<void>((resolve) => {
+      let settled = false;
+
+      const cleanup = () => {
+        if (settled) {
+          return;
+        }
+
+        settled = true;
+        window.clearTimeout(timeoutId);
+        video.removeEventListener("loadeddata", handleReady);
+        video.removeEventListener("canplay", handleReady);
+        video.removeEventListener("error", handleReady);
+      };
+
+      const handleReady = () => {
+        cleanup();
+        resolve();
+      };
+
+      const timeoutId = window.setTimeout(handleReady, 8000);
+
+      video.addEventListener("loadeddata", handleReady, { once: true });
+      video.addEventListener("canplay", handleReady, { once: true });
+      video.addEventListener("error", handleReady, { once: true });
+    });
+  };
 
   useEffect(() => {
     const card = cardRef.current;
@@ -38,8 +74,8 @@ export default function ProductVideoCard({
       },
       {
         root: null,
-        rootMargin: "250px",
-        threshold: 0.1,
+        rootMargin: "800px",
+        threshold: 0.01,
       },
     );
 
@@ -50,6 +86,20 @@ export default function ProductVideoCard({
     };
   }, []);
 
+  useEffect(() => {
+    if (!shouldLoadVideo) {
+      return;
+    }
+
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    video.load();
+  }, [shouldLoadVideo]);
+
   const handleTogglePlay = async () => {
     const video = videoRef.current;
 
@@ -57,18 +107,47 @@ export default function ProductVideoCard({
       return;
     }
 
-    setShouldLoadVideo(true);
-
-    if (video.paused) {
-      try {
-        await video.play();
-        setIsPlaying(true);
-      } catch {
-        setIsPlaying(false);
-      }
-    } else {
+    const cancelPendingPlay = () => {
+      playRequestIdRef.current += 1;
+      isPlayPendingRef.current = false;
       video.pause();
       setIsPlaying(false);
+    };
+
+    if (isPlaying || isPlayPendingRef.current) {
+      cancelPendingPlay();
+      return;
+    }
+
+    const requestId = ++playRequestIdRef.current;
+    isPlayPendingRef.current = true;
+
+    flushSync(() => {
+      setShouldLoadVideo(true);
+    });
+
+    video.load();
+
+    try {
+      await waitForVideoReady(video);
+
+      if (requestId !== playRequestIdRef.current) {
+        return;
+      }
+
+      await video.play();
+
+      if (requestId === playRequestIdRef.current) {
+        setIsPlaying(true);
+      }
+    } catch {
+      if (requestId === playRequestIdRef.current) {
+        setIsPlaying(false);
+      }
+    } finally {
+      if (requestId === playRequestIdRef.current) {
+        isPlayPendingRef.current = false;
+      }
     }
   };
 
@@ -81,7 +160,7 @@ export default function ProductVideoCard({
         <video
           ref={videoRef}
           className="h-full w-full object-cover"
-          preload="metadata"
+          preload="auto"
           playsInline
           muted
           onPlay={() => setIsPlaying(true)}

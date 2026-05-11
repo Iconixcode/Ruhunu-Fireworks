@@ -58,7 +58,23 @@ export default function HeroSection() {
       }
     };
 
+    const handleCanPlay = () => {
+      void playVideo();
+    };
+
+    const handleLoadedData = () => {
+      void playVideo();
+    };
+
+    video.addEventListener("canplay", handleCanPlay);
+    video.addEventListener("loadeddata", handleLoadedData);
+    video.load();
     playVideo();
+
+    return () => {
+      video.removeEventListener("canplay", handleCanPlay);
+      video.removeEventListener("loadeddata", handleLoadedData);
+    };
   }, []);
 
   return (
@@ -75,7 +91,7 @@ export default function HeroSection() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           aria-hidden="true"
         >
           <source src="/videos/landing-section.mp4" type="video/mp4" />
@@ -136,11 +152,11 @@ export default function HeroSection() {
               className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-base font-bold leading-none tracking-wide transition duration-200 hover:scale-[1.03] sm:gap-3 sm:px-7 sm:py-3 sm:text-[1.35rem]"
               style={{
                 background:
-                  "linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.08))",
+                  "linear-gradient(120deg, rgba(255,255,255,0.34), rgba(255,255,255,0.18))",
                 backdropFilter: "blur(16px) saturate(140%)",
                 WebkitBackdropFilter: "blur(16px) saturate(140%)",
                 boxShadow:
-                  "inset 0 1px 0 rgba(255,255,255,0.35), 0 0 0 1px rgba(255,255,255,0.22), 0 10px 24px rgba(0,0,0,0.3)",
+                  "inset 0 1px 0 rgba(255,255,255,0.55), 0 0 0 1px rgba(255,255,255,0.34), 0 12px 28px rgba(0,0,0,0.36)",
                 color: "#050505",
               }}
             >

@@ -1,6 +1,8 @@
 ﻿"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
+import { flushSync } from "react-dom";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -36,15 +38,22 @@ export default function FireworksSection() {
   const [current, setCurrent] = useState(0);
   const [textVisible, setTextVisible] = useState(true);
   const [disableSlideTransition, setDisableSlideTransition] = useState(false);
+  const [hideDesktopTrack, setHideDesktopTrack] = useState(false);
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const mobileScrollRef = useRef<HTMLDivElement | null>(null);
   const mobileCardRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const isWrappingRef = useRef(false);
 
   const productCount = heroProducts.length;
   const activeIndex = current === productCount ? 0 : current;
-  const circularProducts = [...heroProducts, heroProducts[0]];
+  const desktopProducts = [
+    heroProducts[heroProducts.length - 1],
+    ...heroProducts,
+    heroProducts[0],
+  ];
+  const desktopIndex = current + 1;
 
   const isMobileOrTablet = () => {
     if (typeof window === "undefined") {
@@ -54,7 +63,7 @@ export default function FireworksSection() {
     return window.innerWidth < 1024;
   };
 
-  const scrollMobileCardIntoView = (index: number) => {
+  const scrollMobileCardIntoView = useCallback((index: number) => {
     if (!isMobileOrTablet()) {
       return;
     }
@@ -75,7 +84,7 @@ export default function FireworksSection() {
       left: targetLeft,
       behavior: "smooth",
     });
-  };
+  }, []);
 
   const changeSlide = (nextIndex: number) => {
     setTextVisible(false);
@@ -98,10 +107,20 @@ export default function FireworksSection() {
     changeSlide(nextIndex);
   };
 
-  const getSlideIndex = (idx: number) => idx % productCount;
+  const getDesktopSlideIndex = (idx: number) => {
+    if (idx === 0) {
+      return productCount - 1;
+    }
+
+    if (idx === desktopProducts.length - 1) {
+      return 0;
+    }
+
+    return idx - 1;
+  };
 
   const handleDesktopCardClick = (
-    event: React.MouseEvent<HTMLDivElement>,
+    event: MouseEvent<HTMLDivElement>,
     slideIndex: number,
   ) => {
     const target = event.target as HTMLElement;
@@ -164,30 +183,31 @@ export default function FireworksSection() {
     };
   }, []);
 
-  useEffect(() => {
-    if (current !== productCount) {
+  const handleDesktopTrackTransitionEnd = () => {
+    if (current !== productCount || isWrappingRef.current) {
       return;
     }
 
-    const timeout = setTimeout(() => {
+    isWrappingRef.current = true;
+
+    flushSync(() => {
+      setHideDesktopTrack(true);
       setDisableSlideTransition(true);
       setCurrent(0);
+    });
 
+    requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setDisableSlideTransition(false);
-        });
+        setDisableSlideTransition(false);
+        setHideDesktopTrack(false);
+        isWrappingRef.current = false;
       });
-    }, slideTransitionDuration);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [current, productCount]);
+    });
+  };
 
   useEffect(() => {
     scrollMobileCardIntoView(activeIndex);
-  }, [activeIndex]);
+  }, [activeIndex, scrollMobileCardIntoView]);
 
   return (
     <section
@@ -407,16 +427,18 @@ export default function FireworksSection() {
               <div className="fireworks-animate overflow-hidden">
                 <div
                   className="flex gap-5"
+                  onTransitionEnd={handleDesktopTrackTransitionEnd}
                   style={{
-                    transform: `translateX(${-current * slideWidth}px)`,
+                    transform: `translateX(${-desktopIndex * slideWidth}px)`,
                     transition: disableSlideTransition
                       ? "none"
                       : `transform ${slideTransitionDuration}ms ease-in-out`,
+                    visibility: hideDesktopTrack ? "hidden" : "visible",
                   }}
                 >
-                  {circularProducts.map((product, index) => {
-                    const slideIndex = getSlideIndex(index);
-                    const isActiveCard = index === current;
+                  {desktopProducts.map((product, index) => {
+                    const slideIndex = getDesktopSlideIndex(index);
+                    const isActiveCard = index === desktopIndex;
 
                     return (
                       <div

@@ -8,7 +8,7 @@ import FooterSection from "@/src/components/layout/footer";
 import Container from "@/src/components/ui/container";
 import ProductVideoCard from "@/src/components/fireworks/product-video-card";
 import ProductDetailsReveal from "@/src/components/animations/product-details-reveal";
-import { products } from "../../../constants/products";
+import { products } from "@/src/constants/products";
 
 const specRows = [
   { key: "duration" as const, label: "Duration" },
@@ -52,8 +52,8 @@ export default async function ProductDetailPage({
             style={{
               fontFamily: "Poppins, sans-serif",
               fontWeight: 600,
-              fontSize: "40px",
-              lineHeight: "60px",
+              fontSize: "36px",
+              lineHeight: "54px",
               letterSpacing: "-0.06em",
             }}
           >
@@ -87,8 +87,8 @@ export default async function ProductDetailPage({
                 className="mb-3 text-white"
                 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "24px",
-                  lineHeight: "36px",
+                  fontSize: "20px",
+                  lineHeight: "30px",
                   letterSpacing: "0.02em",
                 }}
               >
@@ -98,8 +98,8 @@ export default async function ProductDetailPage({
               <p
                 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "20px",
-                  lineHeight: "30px",
+                  fontSize: "16px",
+                  lineHeight: "28px",
                   letterSpacing: "-0.04em",
                   color: "rgba(255,255,255,0.64)",
                 }}
@@ -123,8 +123,8 @@ export default async function ProductDetailPage({
                 className="mb-6 text-white"
                 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "24px",
-                  lineHeight: "36px",
+                  fontSize: "20px",
+                  lineHeight: "30px",
                   letterSpacing: "0.02em",
                 }}
               >
@@ -138,8 +138,8 @@ export default async function ProductDetailPage({
                       <span
                         style={{
                           fontFamily: "Poppins, sans-serif",
-                          fontSize: "20px",
-                          lineHeight: "30px",
+                          fontSize: "16px",
+                          lineHeight: "28px",
                           color: "rgba(255,255,255,0.64)",
                         }}
                       >
@@ -150,8 +150,8 @@ export default async function ProductDetailPage({
                         className="text-right text-white"
                         style={{
                           fontFamily: "Poppins, sans-serif",
-                          fontSize: "20px",
-                          lineHeight: "30px",
+                          fontSize: "16px",
+                          lineHeight: "28px",
                         }}
                       >
                         {product.specs[key]}
@@ -184,8 +184,8 @@ export default async function ProductDetailPage({
                 className="mb-6 text-white"
                 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "24px",
-                  lineHeight: "36px",
+                  fontSize: "20px",
+                  lineHeight: "30px",
                   letterSpacing: "0.02em",
                 }}
               >
@@ -195,8 +195,8 @@ export default async function ProductDetailPage({
               <p
                 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "20px",
-                  lineHeight: "30px",
+                  fontSize: "16px",
+                  lineHeight: "28px",
                   color: "rgba(255,255,255,0.71)",
                 }}
               >
@@ -210,8 +210,8 @@ export default async function ProductDetailPage({
               className="mb-8 text-white"
               style={{
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "36px",
-                lineHeight: "54px",
+                fontSize: "32px",
+                lineHeight: "48px",
                 letterSpacing: "0.02em",
               }}
             >
