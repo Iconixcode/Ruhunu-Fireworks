@@ -1,6 +1,6 @@
 "use client";
 
-import { Pause, Play } from "lucide-react";
+import { Pause, Play, VideoOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 
@@ -21,7 +21,13 @@ export default function ProductVideoCard({
   const [isPlaying, setIsPlaying] = useState(false);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
 
-  const previewVideoSrc = `${videoSrc}#t=0.5`;
+  // Normalize src — treat whitespace-only as empty too
+  const normalizedSrc = videoSrc?.trim() ?? "";
+  const hasVideo = normalizedSrc.length > 0;
+
+  // Strip Cloudinary query params that conflict with range requests,
+  // then append the seek hint so mobile can show a thumbnail frame.
+  const previewVideoSrc = hasVideo ? `${normalizedSrc}#t=0.5` : "";
 
   const waitForVideoReady = (video: HTMLVideoElement) => {
     if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
@@ -32,10 +38,7 @@ export default function ProductVideoCard({
       let settled = false;
 
       const cleanup = () => {
-        if (settled) {
-          return;
-        }
-
+        if (settled) return;
         settled = true;
         window.clearTimeout(timeoutId);
         video.removeEventListener("loadeddata", handleReady);
@@ -48,7 +51,8 @@ export default function ProductVideoCard({
         resolve();
       };
 
-      const timeoutId = window.setTimeout(handleReady, 8000);
+      // 12 s timeout — generous for mobile on slow connections
+      const timeoutId = window.setTimeout(handleReady, 12_000);
 
       video.addEventListener("loadeddata", handleReady, { once: true });
       video.addEventListener("canplay", handleReady, { once: true });
@@ -58,15 +62,11 @@ export default function ProductVideoCard({
 
   useEffect(() => {
     const card = cardRef.current;
-
-    if (!card) {
-      return;
-    }
+    if (!card || !hasVideo) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-
         if (entry.isIntersecting) {
           setShouldLoadVideo(true);
           observer.disconnect();
@@ -74,38 +74,27 @@ export default function ProductVideoCard({
       },
       {
         root: null,
-        rootMargin: "800px",
+        // Reduced from 800 px — 400 px is enough to pre-load without
+        // hammering the network for every card on page load.
+        rootMargin: "400px",
         threshold: 0.01,
       },
     );
 
     observer.observe(card);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+    return () => observer.disconnect();
+  }, [hasVideo]);
 
   useEffect(() => {
-    if (!shouldLoadVideo) {
-      return;
-    }
-
+    if (!shouldLoadVideo) return;
     const video = videoRef.current;
-
-    if (!video) {
-      return;
-    }
-
+    if (!video) return;
     video.load();
   }, [shouldLoadVideo]);
 
   const handleTogglePlay = async () => {
     const video = videoRef.current;
-
-    if (!video) {
-      return;
-    }
+    if (!video || !hasVideo) return;
 
     const cancelPendingPlay = () => {
       playRequestIdRef.current += 1;
@@ -130,10 +119,7 @@ export default function ProductVideoCard({
 
     try {
       await waitForVideoReady(video);
-
-      if (requestId !== playRequestIdRef.current) {
-        return;
-      }
+      if (requestId !== playRequestIdRef.current) return;
 
       await video.play();
 
@@ -157,36 +143,55 @@ export default function ProductVideoCard({
       className="overflow-hidden rounded-2xl border border-white bg-[#080C17]"
     >
       <div className="relative h-[232px] w-full overflow-hidden bg-black">
-        <video
-          ref={videoRef}
-          className="h-full w-full object-cover"
-          preload="auto"
-          playsInline
-          muted
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          onEnded={() => setIsPlaying(false)}
-        >
-          {shouldLoadVideo ? (
-            <source src={previewVideoSrc} type="video/mp4" />
-          ) : null}
-          Your browser does not support the video tag.
-        </video>
+        {hasVideo ? (
+          <>
+            <video
+              ref={videoRef}
+              className="h-full w-full object-cover"
+              // "metadata" = only fetch duration/dimensions on load,
+              // NOT the full video. Full data fetches when user hits play
+              // or when the card enters the viewport (via shouldLoadVideo).
+              preload="metadata"
+              playsInline
+              muted
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              onEnded={() => setIsPlaying(false)}
+            >
+              {shouldLoadVideo ? (
+                <source src={previewVideoSrc} type="video/mp4" />
+              ) : null}
+              Your browser does not support the video tag.
+            </video>
 
-        {!shouldLoadVideo ? (
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),rgba(0,0,0,0.85))]" />
-        ) : null}
+            {/* Dark overlay before the video has been loaded into the viewport */}
+            {!shouldLoadVideo && (
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),rgba(0,0,0,0.85))]" />
+            )}
 
-        <button
-          type="button"
-          onClick={handleTogglePlay}
-          aria-label={isPlaying ? "Pause video" : "Play video"}
-          className="absolute inset-0 flex items-center justify-center bg-black/20 transition duration-300 hover:bg-black/30"
-        >
-          <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-md transition duration-300 hover:scale-105 hover:bg-black/60">
-            {isPlaying ? <Pause size={26} /> : <Play size={28} />}
-          </span>
-        </button>
+            <button
+              type="button"
+              onClick={handleTogglePlay}
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+              className="absolute inset-0 flex items-center justify-center bg-black/20 transition duration-300 hover:bg-black/30"
+            >
+              <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-md transition duration-300 hover:scale-105 hover:bg-black/60">
+                {isPlaying ? <Pause size={26} /> : <Play size={28} />}
+              </span>
+            </button>
+          </>
+        ) : (
+          /* ── Placeholder for items with no video yet ── */
+          <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-[#080C17]">
+            <VideoOff size={32} className="text-white/25" />
+            <p
+              className="text-white/30"
+              style={{ fontFamily: "Poppins, sans-serif", fontSize: "12px" }}
+            >
+              Video coming soon
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="px-4 py-3">
