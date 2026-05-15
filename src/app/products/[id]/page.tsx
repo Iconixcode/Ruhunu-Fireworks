@@ -223,7 +223,7 @@ export default async function ProductDetailPage({
                 <ProductVideoCard
                   key={`${product.id}-${label}-${index}`}
                   title={label}
-                  videoSrc="/videos/products/firework-product.mp4"
+                  videoSrc={product.galleryImages[index]?.src || ""}
                 />
               ))}
             </div>

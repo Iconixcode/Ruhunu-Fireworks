@@ -108,15 +108,15 @@ export default function Navbar() {
           <div className="flex items-center justify-between gap-4">
             <Link
               href="/"
-              className="flex items-center"
+              className="relative flex h-10 w-[168px] items-center sm:h-12 sm:w-[201px] md:h-14 md:w-[234px]"
               onClick={() => handleNavClick("/")}
             >
               <Image
                 src="/images/logo.png"
                 alt="Ruhunu Fireworks logo"
-                width={168}
-                height={56}
-                className="h-10 w-auto max-w-30 object-contain sm:h-12 sm:max-w-38 md:h-14 md:max-w-42"
+                fill
+                sizes="(max-width: 640px) 168px, (max-width: 768px) 201px, 234px"
+                className="object-contain"
                 priority
               />
             </Link>
