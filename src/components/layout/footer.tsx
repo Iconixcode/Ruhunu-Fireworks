@@ -1,11 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa6";
-import {
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 import { colors } from "@/src/constants/colors";
 
@@ -119,7 +115,11 @@ export default function FooterSection() {
                     key={link.label}
                     href={link.href}
                     className="text-[0.95rem] font-normal text-white/80 transition duration-300 hover:text-[var(--footer-link-hover)] sm:text-[1rem]"
-                    style={{ "--footer-link-hover": colors.accentSoft } as Record<string, string>}
+                    style={
+                      {
+                        "--footer-link-hover": colors.accentSoft,
+                      } as Record<string, string>
+                    }
                   >
                     {link.label}
                   </Link>
@@ -170,9 +170,26 @@ export default function FooterSection() {
             </div>
           </div>
 
-          <div className="pt-3 text-center">
+          <div className="flex flex-col items-center justify-between gap-2 pt-4 text-center sm:flex-row sm:text-left">
             <p className="text-[0.85rem] font-normal text-white/70 sm:text-[0.95rem]">
-              © 2026 FireGlow. All rights reserved.
+              Copyright © 2026 Ruhunu Fireworks. All Rights Reserved
+            </p>
+
+            <p className="text-[0.85rem] font-normal text-white/70 sm:text-[0.95rem]">
+              Designed &amp; Developed by{" "}
+              <a
+                href="https://iconixcode.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-white transition duration-300 hover:text-[var(--developer-link-hover)]"
+                style={
+                  {
+                    "--developer-link-hover": colors.accentSoft,
+                  } as Record<string, string>
+                }
+              >
+                IconiXcode
+              </a>
             </p>
           </div>
         </div>
