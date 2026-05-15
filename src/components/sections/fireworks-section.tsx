@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
-import { flushSync } from "react-dom";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -38,21 +37,30 @@ export default function FireworksSection() {
   const [current, setCurrent] = useState(0);
   const [textVisible, setTextVisible] = useState(true);
   const [disableSlideTransition, setDisableSlideTransition] = useState(false);
-  const [hideDesktopTrack, setHideDesktopTrack] = useState(false);
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const mobileScrollRef = useRef<HTMLDivElement | null>(null);
   const mobileCardRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const isWrappingRef = useRef(false);
+  const isResettingRef = useRef(false);
 
   const productCount = heroProducts.length;
-  const activeIndex = current === productCount ? 0 : current;
+  const activeIndex = current % productCount;
+
+  /*
+    Desktop carousel structure:
+    [last product] + [real product list] + [duplicate full product list]
+
+    This prevents the visible blink when moving from the last card to the first card.
+    The duplicate full product list gives the carousel enough cards after the duplicated
+    first card, so the silent reset back to the real first card is not noticeable.
+  */
   const desktopProducts = [
-    heroProducts[heroProducts.length - 1],
+    heroProducts[productCount - 1],
     ...heroProducts,
-    heroProducts[0],
+    ...heroProducts,
   ];
+
   const desktopIndex = current + 1;
 
   const isMobileOrTablet = () => {
@@ -112,11 +120,7 @@ export default function FireworksSection() {
       return productCount - 1;
     }
 
-    if (idx === desktopProducts.length - 1) {
-      return 0;
-    }
-
-    return idx - 1;
+    return (idx - 1) % productCount;
   };
 
   const handleDesktopCardClick = (
@@ -183,24 +187,28 @@ export default function FireworksSection() {
     };
   }, []);
 
-  const handleDesktopTrackTransitionEnd = () => {
-    if (current !== productCount || isWrappingRef.current) {
+  const handleDesktopTrackTransitionEnd = (
+    event: React.TransitionEvent<HTMLDivElement>,
+  ) => {
+    if (event.target !== event.currentTarget) {
       return;
     }
 
-    isWrappingRef.current = true;
+    if (current !== productCount || isResettingRef.current) {
+      return;
+    }
 
-    flushSync(() => {
-      setHideDesktopTrack(true);
-      setDisableSlideTransition(true);
-      setCurrent(0);
-    });
+    isResettingRef.current = true;
 
     requestAnimationFrame(() => {
+      setDisableSlideTransition(true);
+      setCurrent(0);
+
       requestAnimationFrame(() => {
-        setDisableSlideTransition(false);
-        setHideDesktopTrack(false);
-        isWrappingRef.current = false;
+        requestAnimationFrame(() => {
+          setDisableSlideTransition(false);
+          isResettingRef.current = false;
+        });
       });
     });
   };
@@ -433,7 +441,6 @@ export default function FireworksSection() {
                     transition: disableSlideTransition
                       ? "none"
                       : `transform ${slideTransitionDuration}ms ease-in-out`,
-                    visibility: hideDesktopTrack ? "hidden" : "visible",
                   }}
                 >
                   {desktopProducts.map((product, index) => {
@@ -460,7 +467,7 @@ export default function FireworksSection() {
                             ? "scale(1)"
                             : "scale(0.88)",
                           opacity:
-                            Math.abs(index - current) > 1
+                            Math.abs(index - desktopIndex) > 1
                               ? 0.4
                               : isActiveCard
                                 ? 1
