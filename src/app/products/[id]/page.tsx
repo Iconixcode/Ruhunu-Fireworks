@@ -41,6 +41,13 @@ export default async function ProductDetailPage({
     notFound();
   }
 
+  // Only render gallery cards that have a non-empty video src.
+  // Items with src: "" are placeholders — they'll show a "coming soon" state
+  // inside ProductVideoCard, but we still render them so the label is visible.
+  // If you'd prefer to hide them entirely, change the filter to:
+  //   const galleryItems = product.galleryImages.filter(({ src }) => src.trim());
+  const galleryItems = product.galleryImages;
+
   return (
     <main className="min-h-screen bg-[#000211] pt-32 sm:pt-36">
       <Navbar />
@@ -219,11 +226,11 @@ export default async function ProductDetailPage({
             </h2>
 
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {product.galleryImages.map(({ label }, index) => (
+              {galleryItems.map(({ label, src }, index) => (
                 <ProductVideoCard
                   key={`${product.id}-${label}-${index}`}
                   title={label}
-                  videoSrc={product.galleryImages[index]?.src || ""}
+                  videoSrc={src}
                 />
               ))}
             </div>
