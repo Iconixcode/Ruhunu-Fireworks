@@ -95,7 +95,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <Container>
         <nav
-          className="mt-3 rounded-4xl px-3 py-2 sm:mt-4 sm:px-5 md:px-6"
+          className="mt-3 rounded-4xl py-2 pl-2 pr-3 sm:mt-4 sm:pl-3 sm:pr-5 md:pl-4 md:pr-6"
           style={{
             background:
               "linear-gradient(120deg, rgba(9, 21, 36, 0.82), rgba(13, 28, 45, 0.66))",
@@ -105,23 +105,24 @@ export default function Navbar() {
               "inset 0 1px 0 rgba(255,255,255,0.1), 0 0 0 1px rgba(15,35,58,0.72), 0 10px 28px rgba(0,0,0,0.35)",
           }}
         >
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="relative flex h-10 w-[168px] items-center sm:h-12 sm:w-[201px] md:h-14 md:w-[234px]"
+              className="flex shrink-0 items-center"
               onClick={() => handleNavClick("/")}
             >
               <Image
                 src="/images/logo.png"
                 alt="Ruhunu Fireworks logo"
-                fill
-                sizes="(max-width: 640px) 168px, (max-width: 768px) 201px, 234px"
-                className="object-contain"
+                width={234}
+                height={56}
+                sizes="(max-width: 640px) 140px, (max-width: 768px) 168px, 234px"
+                className="h-10 w-auto object-contain object-left sm:h-12 md:h-14"
                 priority
               />
             </Link>
 
-            <div className="hidden items-center gap-7 lg:flex xl:gap-9">
+            <div className="ml-auto hidden items-center gap-7 lg:flex xl:gap-9">
               {navigationLinks.map((item) => {
                 const active = isActiveLink(item.href);
 
@@ -168,7 +169,7 @@ export default function Navbar() {
               aria-label="Toggle navigation menu"
               aria-expanded={isOpen}
               onClick={() => setIsOpen((prev) => !prev)}
-              className="flex h-10 w-10 items-center justify-center text-white transition duration-300 hover:text-[#ffc786] lg:hidden"
+              className="ml-auto flex h-10 w-10 shrink-0 items-center justify-center text-white transition duration-300 hover:text-[#ffc786] lg:hidden"
             >
               <span className="relative flex h-5 w-5 items-center justify-center">
                 <Menu
