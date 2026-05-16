@@ -1,3 +1,17 @@
+export type ProductVariantGroup = {
+  name: string;
+  href?: string;
+  children?: ProductVariantGroup[];
+};
+
+export type ProductSubpage = {
+  slug: string;
+  name: string;
+  longDesc: string;
+  variants: string[];
+  galleryImages: { src: string; label: string }[];
+};
+
 export interface Product {
   id: number;
   name: string;
@@ -11,6 +25,10 @@ export interface Product {
   };
   /** When set, the detail page shows this list instead of the specifications panel. */
   variants?: string[];
+  /** Nested product boxes that link to sub-pages (e.g. Magic Bombs → ab, bc, cd). */
+  variantGroups?: ProductVariantGroup[];
+  /** Sub-page content keyed by slug, used with variantGroups hrefs. */
+  subpages?: Record<string, ProductSubpage>;
   howItWorks: string;
   image: string;
   galleryImages: { src: string; label: string }[];
@@ -78,6 +96,12 @@ const productCatalog: ProductCatalog = {
       effects: "Flower petal bursts",
       shots: "15-20 shots",
     },
+    variants: [
+      "10 Shots Colour (C)",
+      "10 Shots Crackling (C)",
+      "10 Shots China (C)",
+      
+    ],
     howItWorks:
       "Spring Flowers launches aerial shells that open into wide, petal-shaped bursts of vivid color. Each shell blooms outward in layers, creating a cascading floral pattern across the night sky.",
     image:
@@ -99,6 +123,11 @@ const productCatalog: ProductCatalog = {
       effects: "Cascading spark showers",
       shots: "Continuous fountain",
     },
+    variants: [
+      "20 Shots Colour (C)",
+      "20 Shots Two in One (C)",
+      
+    ],
     howItWorks:
       "Sparkling Flower Pots ignites from the ground and sprays a continuous fountain of colorful sparks upward. The sparks cascade outward in a fan-shaped shower, creating a dazzling ground-level display safe for all celebrations.",
     image:
@@ -109,7 +138,7 @@ const productCatalog: ProductCatalog = {
     ],
   },
   4: {
-    name: "Fountains",
+    name: " Fountains",
     shortDesc: "A powerful aerial firework with rapid, high-energy crackling bursts.",
     longDesc:
       "A powerful aerial firework that delivers rapid, high-energy bursts with bright flashes and crackling effects in the sky.",
@@ -119,6 +148,12 @@ const productCatalog: ProductCatalog = {
       effects: "Crackling flash bursts",
       shots: "30-36 shots",
     },
+    variants: [
+      "Colour Fountain (C)",
+      "Golden Fountain (C)",
+      "Crackling Fountain (C)",
+      "SPECIAL Fountain",
+    ],
     howItWorks:
       "Witchcraft fires rapid aerial shells in quick succession, each detonating with sharp crackling sounds and intense flashes of light. The tight timing creates an overwhelming cascade of energy across the sky.",
     image:
@@ -131,245 +166,105 @@ const productCatalog: ProductCatalog = {
     ],
   },
   5: {
-    name: "3''  Magic Bombs",
+    name: "Magic Bombs",
     shortDesc: "A ground fountain that sprays colorful sparks in a peacock fan shape.",
     longDesc:
-      "A ground fountain firework that sprays colorful sparks in a fan shape, inspired by a peacock's vibrant feathers.",
+      "Magic Bombs is a versatile ground firework range offering bold bursts and vibrant effects. Choose a product line below to explore variants and watch each one in the gallery.",
     specs: {
       duration: "50-70 seconds",
       height: "8-12 feet",
       effects: "Fan-shaped spark spray",
       shots: "Continuous fountain",
     },
+    variantGroups: [
+      { name: "3'' Magic Bombs", href: "/products/5/3'" },
+      { name: "4'' Magic Bombs", href: "/products/5/4'" },
+      { name: "6'' Magic Bombs", href: "/products/5/6'" },
+    ],
+    
+    subpages: {
+      '3\'': {
+        slug: "3'",
+        name: "3'' Magic Bombs  ",
+        longDesc:
+          "The 3' Inch Magic Bombs line delivers compact ground bursts with vivid colour and crisp timing—ideal for smaller displays and layered show sequences.",
+        variants: ["3\"  White Colour Shell",
+                   "3\" Silver Colour Shell", 
+                   "3\"  Yellow Colour Shell",
+                   "3\" Green Colour Shell",
+                   "3\" Red Colour Shell",
+                   "3\" Blue Colour Shell",
+                   "3\" Multi Colour Shell",
+                   "3\" Crackling Shell"],
+        galleryImages: [
+          { src: "", label: "3\"  White Colour Shell" },
+          { src: "", label: "3\"  Silver Colour Shell" },
+          { src: "", label: "3\"  Yellow Colour Shell" },
+          { src: "", label: "3\"  Green Colour Shell" },
+          { src: "", label: "3\"  Red Colour Shell" },
+          { src: "", label: "3\"  Blue Colour Shell" },
+          { src: "", label: "3\"  Multi Colour Shell" },
+          { src: "", label: "3\"  Crackling Shell" },
+        ],
+      },
+      '4\'': {
+        slug: "4'",
+        name: "4'' Magic Bombs",
+        longDesc:
+          "The 4' Inch Magic Bombs line offers mid-range power with balanced height and spread, pairing bright flashes with smooth colour transitions across the sky.",
+          variants: ["4\"  White Colour Shell",
+                     "4\" Silver Colour Shell", 
+                     "4\" Yellow Colour Shell",
+                     "4\" Green Colour Shell",
+                     "4\" Red Colour Shell",
+                     "4\" Blue Colour Shell",
+                     "4\" Multi Colour Shell",
+                     "4\" Crackling Shell"],
+          galleryImages: [
+            { src: "", label: "4\"  White Colour Shell" },
+            { src: "", label: "4\"  Silver Colour Shell" },
+            { src: "", label: "4\"  Yellow Colour Shell" },
+            { src: "", label: "4\"  Green Colour Shell" },
+            { src: "", label: "4\"  Red Colour Shell" },
+            { src: "", label: "4\"  Blue Colour Shell" },
+            { src: "", label: "4\"  Multi Colour Shell" },
+            { src: "", label: "4\"  Crackling Shell" },
+          ],
+      },
+      '6\'': {
+        slug: "6'",
+        name: "6'' Magic Bombs",
+        longDesc:
+          "The 6' Inch Magic Bombs line is built for maximum impact—larger bursts, longer trails, and a commanding presence for festival finales and grand celebrations.",
+        variants: ["6\"  White Colour Shell",
+                   "6\" Silver Colour Shell", 
+                   "6\" Yellow Colour Shell",
+                   "6\" Green Colour Shell",
+                   "6\" Red Colour Shell",
+                   "6\" Blue Colour Shell",
+                   "6\" Multi Colour Shell",
+                   "6\" Crackling Shell"],
+        galleryImages: [
+          { src: "", label: "6\"  White Colour Shell" },
+          { src: "", label: "6\"  Silver Colour Shell" },
+          { src: "", label: "6\"  Yellow Colour Shell" },
+          { src: "", label: "6\"  Green Colour Shell" },
+          { src: "", label: "6\"  Red Colour Shell" },
+          { src: "", label: "6\"  Blue Colour Shell" },
+          { src: "", label: "6\"  Multi Colour Shell" },
+          { src: "", label: "6\"  Crackling Shell" },
+        ],
+      },
+    },
     howItWorks:
-      "Peacock Fountain burns from the base, projecting a wide fan of colored sparks that mimics the spread of a peacock tail. The colors shift and layer as the fountain progresses, creating a mesmerizing ground display.",
+      "Magic Bombs ignite from the ground and release rapid sequences of coloured sparks and bursts. Each product line is tuned for a different scale and intensity, so you can mix lines for a layered, professional display.",
     image:
       "https://images.pexels.com/photos/1721172/pexels-photo-1721172.jpeg?auto=compress&cs=tinysrgb&w=600",
-    galleryImages: [
-      
-      { src: "", label: "3\" Inch White Colour Shell" },
-      { src: "", label: "3\" Inch Silver Colour Shell" },
-      { src: "", label: "3\" Inch Yellow Colour Shell" },
-      { src: "", label: "3\" Inch Green Colour Shell" },
-      { src: "", label: "3\" Inch Red Colour Shell" },
-      { src: "", label: "3\" Inch Blue Colour Shell" },
-      { src: "", label: "3\" Inch Multi Colour Shell" },
-      { src: "", label: "3\" Inch Crackling Shell" },
-    ],
-  },
-  6: {
-    name: "Galaxy Storm",
-    shortDesc: "A dramatic aerial barrage of multi-burst shells filling the sky.",
-    longDesc:
-      "Galaxy Storm is a relentless aerial barrage that fires multi-break shells in rapid sequence, filling the sky with overlapping waves of color and sound.",
-    specs: {
-      duration: "35-45 seconds",
-      height: "150-180 feet",
-      effects: "Multi-break aerial shells",
-      shots: "25-36 shots",
-    },
-    howItWorks:
-      "Galaxy Storm fires high-altitude shells that break twice in the air, first releasing a bright flash and then opening into a wide burst of trailing stars. The overlapping shells create a dense, storm-like canopy of light.",
-    image:
-      "https://images.pexels.com/photos/1190296/pexels-photo-1190296.jpeg?auto=compress&cs=tinysrgb&w=600",
-    galleryImages: [
-      {
-        src: "https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Gold",
-      },
-      {
-        src: "https://images.pexels.com/photos/1721172/pexels-photo-1721172.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Multi",
-      },
-      {
-        src: "https://images.pexels.com/photos/796606/pexels-photo-796606.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Night",
-      },
-      {
-        src: "https://images.pexels.com/photos/933277/pexels-photo-933277.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Color",
-      },
-      {
-        src: "https://images.pexels.com/photos/1387577/pexels-photo-1387577.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Sky",
-      },
-      {
-        src: "https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Festival",
-      },
-    ],
-  },
-  61: {
-    name: "Galaxy Storm",
-    shortDesc: "A dramatic aerial barrage of multi-burst shells filling the sky.",
-    longDesc:
-      "Galaxy Storm is a relentless aerial barrage that fires multi-break shells in rapid sequence, filling the sky with overlapping waves of color and sound.",
-    specs: {
-      duration: "35-45 seconds",
-      height: "150-180 feet",
-      effects: "Multi-break aerial shells",
-      shots: "25-36 shots",
-    },
-    howItWorks:
-      "Galaxy Storm fires high-altitude shells that break twice in the air, first releasing a bright flash and then opening into a wide burst of trailing stars. The overlapping shells create a dense, storm-like canopy of light.",
-    image:
-      "https://images.pexels.com/photos/1190296/pexels-photo-1190296.jpeg?auto=compress&cs=tinysrgb&w=600",
-    galleryImages: [
-      {
-        src: "https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Gold",
-      },
-      {
-        src: "https://images.pexels.com/photos/1721172/pexels-photo-1721172.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Multi",
-      },
-      {
-        src: "https://images.pexels.com/photos/796606/pexels-photo-796606.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Night",
-      },
-      {
-        src: "https://images.pexels.com/photos/933277/pexels-photo-933277.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Color",
-      },
-      {
-        src: "https://images.pexels.com/photos/1387577/pexels-photo-1387577.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Sky",
-      },
-      {
-        src: "https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Galaxy Storm Festival",
-      },
-    ],
-  },
-  7: {
-    name: "Celestial Burst",
-    shortDesc: "A mesmerizing display of shimmering celestial effects and bright trails.",
-    longDesc:
-      "Celestial Burst combines brilliant sparkles with sweeping light trails, creating a stunning celestial display that illuminates the entire sky with its ethereal beauty.",
-    specs: {
-      duration: "40-50 seconds",
-      height: "160-190 feet",
-      effects: "Shimmering celestial effects",
-      shots: "20-28 shots",
-    },
-    howItWorks:
-      "Celestial Burst launches shells that break open with shimmering effects and bright trailing stars. Each burst creates layers of light that cascade gracefully, giving the appearance of a celestial canopy.",
-    image:
-      "https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg?auto=compress&cs=tinysrgb&w=600",
-    galleryImages: [
-      {
-        src: "https://images.pexels.com/photos/1387577/pexels-photo-1387577.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Celestial Burst Silver",
-      },
-      {
-        src: "https://images.pexels.com/photos/1721172/pexels-photo-1721172.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Celestial Burst Gold",
-      },
-      {
-        src: "https://images.pexels.com/photos/796606/pexels-photo-796606.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Celestial Burst Multi",
-      },
-      {
-        src: "https://images.pexels.com/photos/933277/pexels-photo-933277.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Celestial Burst Color",
-      },
-      {
-        src: "https://images.pexels.com/photos/1190296/pexels-photo-1190296.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Celestial Burst Sky",
-      },
-      {
-        src: "https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Celestial Burst Festival",
-      },
-    ],
-  },
-  8: {
-    name: "Inferno Flash",
-    shortDesc: "An intense aerial display with rapid-fire bursts and vivid color transitions.",
-    longDesc:
-      "Inferno Flash delivers an intense, high-energy display with rapid bursts of vibrant colors and dramatic flashing effects that command attention.",
-    specs: {
-      duration: "30-40 seconds",
-      height: "140-170 feet",
-      effects: "Rapid vivid color bursts",
-      shots: "32-40 shots",
-    },
-    howItWorks:
-      "Inferno Flash fires shells in rapid succession, each bursting with bright flashes and vivid color transitions. The quick rhythm creates an intense, adrenaline-pumping visual experience.",
-    image:
-      "https://images.pexels.com/photos/1721172/pexels-photo-1721172.jpeg?auto=compress&cs=tinysrgb&w=600",
-    galleryImages: [
-      {
-        src: "https://images.pexels.com/photos/933277/pexels-photo-933277.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Inferno Flash Red",
-      },
-      {
-        src: "https://images.pexels.com/photos/796606/pexels-photo-796606.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Inferno Flash Orange",
-      },
-      {
-        src: "https://images.pexels.com/photos/1387577/pexels-photo-1387577.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Inferno Flash Yellow",
-      },
-      {
-        src: "https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Inferno Flash Multi",
-      },
-      {
-        src: "https://images.pexels.com/photos/1190296/pexels-photo-1190296.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Inferno Flash Intense",
-      },
-      {
-        src: "https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Inferno Flash Night",
-      },
-    ],
-  },
-  9: {
-    name: "Phantom Dreams",
-    shortDesc: "A mystical aerial show with ethereal effects and smooth color waves.",
-    longDesc:
-      "Phantom Dreams creates an enchanting display with soft, ethereal effects and smooth color transitions that evoke a sense of mystery and wonder.",
-    specs: {
-      duration: "45-55 seconds",
-      height: "150-180 feet",
-      effects: "Ethereal soft bursts",
-      shots: "18-24 shots",
-    },
-    howItWorks:
-      "Phantom Dreams launches shells that burst with soft, ethereal effects and smooth color waves. The gentle, mesmerizing patterns create a dreamlike quality, perfect for intimate celebrations.",
-    image:
-      "https://images.pexels.com/photos/796606/pexels-photo-796606.jpeg?auto=compress&cs=tinysrgb&w=600",
-    galleryImages: [
-      {
-        src: "https://images.pexels.com/photos/1190296/pexels-photo-1190296.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Phantom Dreams Purple",
-      },
-      {
-        src: "https://images.pexels.com/photos/1721172/pexels-photo-1721172.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Phantom Dreams Blue",
-      },
-      {
-        src: "https://images.pexels.com/photos/933277/pexels-photo-933277.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Phantom Dreams Green",
-      },
-      {
-        src: "https://images.pexels.com/photos/1387577/pexels-photo-1387577.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Phantom Dreams Silver",
-      },
-      {
-        src: "https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Phantom Dreams Multi",
-      },
-      {
-        src: "https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&w=600",
-        label: "Phantom Dreams Mystical",
-      },
-    ],
+    galleryImages: [],
   },
 };
 
-const productIds = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
+const productIds = [1, 2, 3, 4, 5] as const;
 
 export const products: Product[] = productIds.map((id) => ({
   id,
@@ -389,4 +284,30 @@ export function getProductById(id: number) {
     id,
     ...product,
   } satisfies Product;
+}
+
+export function getProductSubpage(productId: number, groupSlug: string) {
+  const product = productCatalog[productId];
+
+  if (!product?.subpages) {
+    return undefined;
+  }
+
+  return product.subpages[groupSlug];
+}
+
+export function getProductSubpageParams() {
+  const params: { id: string; group: string }[] = [];
+
+  for (const product of products) {
+    if (!product.subpages) {
+      continue;
+    }
+
+    for (const slug of Object.keys(product.subpages)) {
+      params.push({ id: String(product.id), group: slug });
+    }
+  }
+
+  return params;
 }

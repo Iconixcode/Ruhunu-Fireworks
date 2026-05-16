@@ -8,6 +8,7 @@ import FooterSection from "@/src/components/layout/footer";
 import Container from "@/src/components/ui/container";
 import ProductVideoCard from "@/src/components/fireworks/product-video-card";
 import ProductVariantsGrid from "@/src/components/fireworks/product-variants-grid";
+import ProductVariantGroups from "@/src/components/fireworks/product-variant-groups";
 import ProductDetailsReveal from "@/src/components/animations/product-details-reveal";
 import { products } from "@/src/constants/products";
 import { variantSlug } from "@/src/lib/variant-slug";
@@ -137,10 +138,14 @@ export default async function ProductDetailPage({
                   letterSpacing: "0.02em",
                 }}
               >
-                {product.variants ? "Products" : "Specifications"}
+                {product.variants || product.variantGroups
+                  ? "Products"
+                  : "Specifications"}
               </h3>
 
-              {product.variants ? (
+              {product.variantGroups ? (
+                <ProductVariantGroups groups={product.variantGroups} />
+              ) : product.variants ? (
                 <ProductVariantsGrid variants={product.variants} />
               ) : (
                 <div className="flex flex-col">
@@ -187,30 +192,32 @@ export default async function ProductDetailPage({
 
           </div>
 
-          <div className="product-detail-animate mb-16">
-            <h2
-              className="mb-8 text-white"
-              style={{
-                fontFamily: "Poppins, sans-serif",
-                fontSize: "32px",
-                lineHeight: "48px",
-                letterSpacing: "0.02em",
-              }}
-            >
-              Gallery
-            </h2>
+          {galleryItems.length > 0 && (
+            <div className="product-detail-animate mb-16">
+              <h2
+                className="mb-8 text-white"
+                style={{
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: "32px",
+                  lineHeight: "48px",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                Gallery
+              </h2>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {galleryItems.map(({ label, src }, index) => (
-                <ProductVideoCard
-                  key={`${product.id}-${label}-${index}`}
-                  id={variantSlug(label)}
-                  title={label}
-                  videoSrc={src}
-                />
-              ))}
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {galleryItems.map(({ label, src }, index) => (
+                  <ProductVideoCard
+                    key={`${product.id}-${label}-${index}`}
+                    id={variantSlug(label)}
+                    title={label}
+                    videoSrc={src}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <Link
             href="/products"
