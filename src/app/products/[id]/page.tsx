@@ -7,8 +7,10 @@ import Navbar from "@/src/components/layout/navbar";
 import FooterSection from "@/src/components/layout/footer";
 import Container from "@/src/components/ui/container";
 import ProductVideoCard from "@/src/components/fireworks/product-video-card";
+import ProductVariantsGrid from "@/src/components/fireworks/product-variants-grid";
 import ProductDetailsReveal from "@/src/components/animations/product-details-reveal";
 import { products } from "@/src/constants/products";
+import { variantSlug } from "@/src/lib/variant-slug";
 
 const specRows = [
   { key: "duration" as const, label: "Duration" },
@@ -116,7 +118,7 @@ export default async function ProductDetailPage({
             </div>
           </div>
 
-          <div className="mb-12 grid gap-6 lg:grid-cols-2">
+          <div className="mb-12">
             <div className="product-detail-animate relative overflow-hidden rounded-2xl border border-white/35 bg-[#080C17] px-6 py-7 md:px-8">
               <div
                 className="pointer-events-none absolute inset-0"
@@ -135,35 +137,38 @@ export default async function ProductDetailPage({
                   letterSpacing: "0.02em",
                 }}
               >
-                Specifications
+                {product.variants ? "Products" : "Specifications"}
               </h3>
 
-              <div className="flex flex-col">
-                {specRows.map(({ key, label }, index) => (
-                  <div key={key}>
-                    <div className="flex items-center justify-between py-4">
-                      <span
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "16px",
-                          lineHeight: "28px",
-                          color: "rgba(255,255,255,0.64)",
-                        }}
-                      >
-                        {label}
-                      </span>
+              {product.variants ? (
+                <ProductVariantsGrid variants={product.variants} />
+              ) : (
+                <div className="flex flex-col">
+                  {specRows.map(({ key, label }, index) => (
+                    <div key={key}>
+                      <div className="flex items-center justify-between py-4">
+                        <span
+                          style={{
+                            fontFamily: "Poppins, sans-serif",
+                            fontSize: "16px",
+                            lineHeight: "28px",
+                            color: "rgba(255,255,255,0.64)",
+                          }}
+                        >
+                          {label}
+                        </span>
 
-                      <span
-                        className="text-right text-white"
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "16px",
-                          lineHeight: "28px",
-                        }}
-                      >
-                        {product.specs[key]}
-                      </span>
-                    </div>
+                        <span
+                          className="text-right text-white"
+                          style={{
+                            fontFamily: "Poppins, sans-serif",
+                            fontSize: "16px",
+                            lineHeight: "28px",
+                          }}
+                        >
+                          {product.specs[key]}
+                        </span>
+                      </div>
 
                     {index < specRows.length - 1 && (
                       <div
@@ -174,42 +179,12 @@ export default async function ProductDetailPage({
                       />
                     )}
                   </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
 
-            <div className="product-detail-animate relative overflow-hidden rounded-2xl border border-white/35 bg-[#080C17] px-6 py-7 md:px-8">
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(to bottom right, rgba(255,255,255,0.05) 0%, transparent 50%)",
-                }}
-              />
 
-              <h3
-                className="mb-6 text-white"
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "20px",
-                  lineHeight: "30px",
-                  letterSpacing: "0.02em",
-                }}
-              >
-                How It Works
-              </h3>
-
-              <p
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "16px",
-                  lineHeight: "28px",
-                  color: "rgba(255,255,255,0.71)",
-                }}
-              >
-                {product.howItWorks}
-              </p>
-            </div>
           </div>
 
           <div className="product-detail-animate mb-16">
@@ -225,10 +200,11 @@ export default async function ProductDetailPage({
               Gallery
             </h2>
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {galleryItems.map(({ label, src }, index) => (
                 <ProductVideoCard
                   key={`${product.id}-${label}-${index}`}
+                  id={variantSlug(label)}
                   title={label}
                   videoSrc={src}
                 />

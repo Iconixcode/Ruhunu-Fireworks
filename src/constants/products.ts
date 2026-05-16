@@ -9,6 +9,8 @@ export interface Product {
     effects: string;
     shots: string;
   };
+  /** When set, the detail page shows this list instead of the specifications panel. */
+  variants?: string[];
   howItWorks: string;
   image: string;
   galleryImages: { src: string; label: string }[];
@@ -30,6 +32,21 @@ const productCatalog: ProductCatalog = {
       effects: "Multi-color frame bursts",
       shots: "20-25 shots",
     },
+    variants: [
+      "Akasa Frame 100 Tharu",
+      "Akasa Frame 50 Tharu",
+      "Akasa Frame 100 Wedi",
+      "Akasa Frame 50 Wedi",
+      "Akasa Frame 100 Tharu Mix Whistle",
+      "Akasa Frame 50 Tharu Mix Whistle",
+      "Akasa Frame 100 Wedi Mix Whistle",
+      "Akasa Frame 50 Wedi Mix Whistle",
+      "Akasa Frame 60 Whistle",
+      "Akasa Frame 80 Whistle",
+      "Akasa Frame 100 Whistle",
+      "Akasa Frame 30 Whistle",
+      "Akasa Frame 50Whistle",
+    ],
     howItWorks:
       "Akasa Frame launches a sequence of aerial shots that expand into wide, frame-like bursts across the sky. Each shot opens smoothly with vibrant colors and crackling effects, creating layered patterns that spread evenly, giving a bold and elegant visual display.",
     image:
@@ -47,7 +64,7 @@ const productCatalog: ProductCatalog = {
       { src: "", label: "Akasa Frame 80 Whistle" },
       { src: "", label: "Akasa Frame 100 Whistle" },
       { src: "", label: "Akasa Frame 30 Whistle" },
-      { src: "", label: "Akasa Frame 50 Whistle" },
+      { src: "", label: "Akasa Frame 50Whistle" },
     ],
   },
   2: {
