@@ -5,11 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 
 type ProductVideoCardProps = {
+  id?: string;
   title: string;
   videoSrc: string;
 };
 
 export default function ProductVideoCard({
+  id,
   title,
   videoSrc,
 }: ProductVideoCardProps) {
@@ -21,6 +23,7 @@ export default function ProductVideoCard({
   const [isPlaying, setIsPlaying] = useState(false);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const [showControls, setShowControls] = useState(true);
+  const [isGlowing, setIsGlowing] = useState(false);
 
   const normalizedSrc = videoSrc?.trim() ?? "";
   const hasVideo = normalizedSrc.length > 0;
@@ -104,6 +107,38 @@ export default function ProductVideoCard({
     video.load();
   }, [shouldLoadVideo]);
 
+  useEffect(() => {
+    const card = cardRef.current;
+
+    if (!card || !id) {
+      return;
+    }
+
+    const triggerGlow = () => {
+      setIsGlowing(true);
+      window.setTimeout(() => setIsGlowing(false), 2800);
+    };
+
+    const handleHashMatch = () => {
+      if (window.location.hash === `#${id}`) {
+        triggerGlow();
+      }
+    };
+
+    const handleHighlight = () => {
+      triggerGlow();
+    };
+
+    handleHashMatch();
+    card.addEventListener("gallery-highlight", handleHighlight);
+    window.addEventListener("hashchange", handleHashMatch);
+
+    return () => {
+      card.removeEventListener("gallery-highlight", handleHighlight);
+      window.removeEventListener("hashchange", handleHashMatch);
+    };
+  }, [id]);
+
   const handleTogglePlay = async () => {
     const video = videoRef.current;
 
@@ -172,8 +207,13 @@ export default function ProductVideoCard({
 
   return (
     <article
+      id={id}
       ref={cardRef}
-      className="overflow-hidden rounded-2xl border border-white bg-[#080C17]"
+      className={`gallery-video-card scroll-mt-36 overflow-hidden rounded-2xl border bg-[#080C17] transition-[box-shadow,border-color] duration-500 ${
+        isGlowing
+          ? "border-amber-400 shadow-[0_0_0_2px_rgba(251,191,36,0.85),0_0_36px_10px_rgba(251,146,60,0.45)]"
+          : "border-white"
+      }`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
