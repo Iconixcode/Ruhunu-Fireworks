@@ -13,6 +13,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("");
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const sectionIds = navigationLinks
@@ -51,6 +53,20 @@ export default function Navbar() {
       }
 
       setActiveHash(currentSection);
+
+      // Handle navbar hide/show on scroll
+      const currentScrollY = window.scrollY;
+      
+      // Show navbar when scrolling up or at top
+      if (currentScrollY < lastScrollY || currentScrollY < 100) {
+        setIsVisible(true);
+      } 
+      // Hide navbar when scrolling down (but not at top)
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
 
     updateActiveSection();
@@ -92,7 +108,12 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header 
+      className="fixed inset-x-0 top-0 z-50 transition-transform duration-300"
+      style={{
+        transform: isVisible ? "translateY(0)" : "translateY(-100%)",
+      }}
+    >
       <Container>
         <nav
           className="mt-3 rounded-4xl py-2 pl-2 pr-3 sm:mt-4 sm:pl-3 sm:pr-5 md:pl-4 md:pr-6"
