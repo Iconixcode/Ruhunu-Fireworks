@@ -68,7 +68,7 @@ const productCatalog: ProductCatalog = {
     howItWorks:
       "Akasa Frame launches a sequence of aerial shots that expand into wide, frame-like bursts across the sky. Each shot opens smoothly with vibrant colors and crackling effects, creating layered patterns that spread evenly, giving a bold and elegant visual display.",
     image:
-      "https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "/images/akasa.jpg",
     galleryImages: [
       { src: "https://res.cloudinary.com/dxaguv8d0/video/upload/v1778844319/fire2_xzai5i.mp4", label: "Akasa Frame 100 Tharu" },
       { src: "https://res.cloudinary.com/dxaguv8d0/video/upload/q_auto/f_auto/v1778844320/fire1_e04mx8.mp4", label: "Akasa Frame 50 Tharu" },
