@@ -68,7 +68,7 @@ const productCatalog: ProductCatalog = {
     howItWorks:
       "Akasa Frame launches a sequence of aerial shots that expand into wide, frame-like bursts across the sky. Each shot opens smoothly with vibrant colors and crackling effects, creating layered patterns that spread evenly, giving a bold and elegant visual display.",
     image:
-      "/images/akasa.jpg",
+      "/images/all.jpg",
     galleryImages: [
       { src: "https://res.cloudinary.com/dxaguv8d0/video/upload/v1778844319/fire2_xzai5i.mp4", label: "Akasa Frame 100 Tharu" },
       { src: "https://res.cloudinary.com/dxaguv8d0/video/upload/q_auto/f_auto/v1778844320/fire1_e04mx8.mp4", label: "Akasa Frame 50 Tharu" },
@@ -105,7 +105,7 @@ const productCatalog: ProductCatalog = {
     howItWorks:
       "Spring Flowers launches aerial shells that open into wide, petal-shaped bursts of vivid color. Each shell blooms outward in layers, creating a cascading floral pattern across the night sky.",
     image:
-      "https://images.pexels.com/photos/1387577/pexels-photo-1387577.jpeg?auto=compress&cs=tinysrgb&w=600",
+     "/images/10-shot-all.jpg",
     galleryImages: [
       { src: "", label: "10 SHOTS COLOUR (C)" },
       { src: "", label: "10 SHOTS Crackling (C)" },
@@ -131,7 +131,7 @@ const productCatalog: ProductCatalog = {
     howItWorks:
       "Sparkling Flower Pots ignites from the ground and sprays a continuous fountain of colorful sparks upward. The sparks cascade outward in a fan-shaped shower, creating a dazzling ground-level display safe for all celebrations.",
     image:
-      "https://images.pexels.com/photos/933277/pexels-photo-933277.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "/images/20-shot-all.jpg",
     galleryImages: [
       { src: "", label: "20 Shots Colour (C)" },
       { src: "", label: "20 Shots Two in One (C)" },
@@ -151,16 +151,18 @@ const productCatalog: ProductCatalog = {
     variants: [
       "Colour Fountain (C)",
       "Golden Fountain (C)",
+      "Silver Fountain (C)",
       "Crackling Fountain (C)",
       "SPECIAL Fountain",
     ],
     howItWorks:
       "Witchcraft fires rapid aerial shells in quick succession, each detonating with sharp crackling sounds and intense flashes of light. The tight timing creates an overwhelming cascade of energy across the sky.",
     image:
-      "https://images.pexels.com/photos/796606/pexels-photo-796606.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "/images/fountain-all.jpg",
     galleryImages: [
       { src: "", label: "Colour Fountain (C)" },
       { src: "", label: "Golden Fountain (C)" },
+      { src: "", label: "Silver Fountain (C)" },
       { src: "", label: "Crackling Fountain (C)" },
       { src: "", label: "SPECIAL Fountain" },
     ],
