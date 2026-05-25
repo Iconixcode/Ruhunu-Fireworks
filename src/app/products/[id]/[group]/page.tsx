@@ -64,12 +64,12 @@ export default async function ProductGroupPage({
               <Image
                 src={product.image}
                 alt={pageTitle}
-                width={222}
-                height={222}
+                width={500}
+                height={500}
                 priority
-                sizes="222px"
-                className="h-auto rounded-2xl object-cover"
-                style={{ height: "auto" }}
+                sizes="600px"
+                className="h-full rounded-2xl object-cover"
+                style={{ minHeight: "680px" }}
               />
             </div>
 
