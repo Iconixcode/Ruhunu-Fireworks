@@ -190,7 +190,7 @@ export default function AboutSection() {
 
                 <Link
                   href="#contact"
-                  className="inline-flex h-10 min-w-[126px] items-center justify-center whitespace-nowrap rounded-md border border-[#27376f] bg-[#0b1a44] px-3 text-[0.8rem] font-medium text-white/78 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_8px_20px_rgba(0,0,0,0.14)] transition duration-200 hover:border-[#3a55ad] hover:bg-[#10215a] hover:text-white sm:min-w-[134px] md:min-w-[126px]"
+                   className="inline-flex h-10 min-w-[136px] items-center justify-center whitespace-nowrap rounded-md border bg-white/5 px-3 text-[0.8rem] font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_8px_20px_rgba(0,0,0,0.14)] backdrop-blur-md transition duration-200 hover:border-white/30 hover:bg-white/10 hover:text-white sm:min-w-[144px] md:min-w-[134px]"
                 >
                   Contact us
                 </Link>

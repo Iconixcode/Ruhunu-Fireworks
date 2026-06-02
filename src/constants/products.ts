@@ -10,6 +10,7 @@ export type ProductSubpage = {
   longDesc: string;
   variants: string[];
   galleryImages: { src: string; label: string }[];
+  image?: string;
 };
 
 export interface Product {
@@ -97,9 +98,9 @@ const productCatalog: ProductCatalog = {
       shots: "15-20 shots",
     },
     variants: [
-      "10 Shots Colour (C)",
-      "10 Shots Crackling (C)",
-      "10 Shots China (C)",
+      "10 Shots Colour ",
+      "10 Shots Crackling ",
+      "10 Shots China ",
       
     ],
     howItWorks:
@@ -107,9 +108,9 @@ const productCatalog: ProductCatalog = {
     image:
      "/images/10-shot-all.jpg",
     galleryImages: [
-      { src: "", label: "10 SHOTS COLOUR (C)" },
-      { src: "", label: "10 SHOTS Crackling (C)" },
-      { src: "", label: "10 Shots China (C)" },
+      { src: "", label: "10 Shots Colour " },
+      { src: "", label: "10 Shots Crackling " },
+      { src: "", label: "10 Shots China " },
     ],
   },
   3: {
@@ -124,8 +125,8 @@ const productCatalog: ProductCatalog = {
       shots: "Continuous fountain",
     },
     variants: [
-      "20 Shots Colour (C)",
-      "20 Shots Two in One (C)",
+      "20 Shots Colour ",
+      "20 Shots Two in One ",
       
     ],
     howItWorks:
@@ -133,8 +134,8 @@ const productCatalog: ProductCatalog = {
     image:
       "/images/20-shot-all.jpg",
     galleryImages: [
-      { src: "", label: "20 Shots Colour (C)" },
-      { src: "", label: "20 Shots Two in One (C)" },
+      { src: "", label: "20 Shots Colour " },
+      { src: "", label: "20 Shots Two in One " },
     ],
   },
   4: {
@@ -149,10 +150,10 @@ const productCatalog: ProductCatalog = {
       shots: "30-36 shots",
     },
     variants: [
-      "Colour Fountain (C)",
-      "Golden Fountain (C)",
-      "Silver Fountain (C)",
-      "Crackling Fountain (C)",
+      "Colour Fountain ",
+      "Golden Fountain ",
+      "Silver Fountain ",
+      "Crackling Fountain",
       "SPECIAL Fountain",
     ],
     howItWorks:
@@ -160,10 +161,10 @@ const productCatalog: ProductCatalog = {
     image:
       "/images/fountain-all.jpg",
     galleryImages: [
-      { src: "", label: "Colour Fountain (C)" },
-      { src: "", label: "Golden Fountain (C)" },
-      { src: "", label: "Silver Fountain (C)" },
-      { src: "", label: "Crackling Fountain (C)" },
+      { src: "", label: "Colour Fountain " },
+      { src: "", label: "Golden Fountain " },
+      { src: "", label: "Silver Fountain " },
+      { src: "", label: "Crackling Fountain" },
       { src: "", label: "SPECIAL Fountain" },
     ],
   },
@@ -178,20 +179,23 @@ const productCatalog: ProductCatalog = {
       effects: "Fan-shaped spark spray",
       shots: "Continuous fountain",
     },
+    image:
+      "/images/magic bomb all.png",
     variantGroups: [
-      { name: "3'' Magic Bombs", href: "/products/5/3'" },
-      { name: "4'' Magic Bombs", href: "/products/5/4'" },
-      { name: "6'' Magic Bombs", href: "/products/5/6'" },
+      { name: "3'' Magic Bombs", href: "/products/5/3-inch" },
+      { name: "4'' Magic Bombs", href: "/products/5/4-inch" },
+      { name: "6'' Magic Bombs", href: "/products/5/6-inch" },
     ],
-    
+
     subpages: {
-      '3\'': {
-        slug: "3'",
+      '3-inch': {
+        slug: "3-inch",
         name: "3'' Magic Bombs  ",
         longDesc:
           "The 3' Inch Magic Bombs line delivers compact ground bursts with vivid colour and crisp timing—ideal for smaller displays and layered show sequences.",
+        image: "/images/all 3.jpg",
         variants: ["3\"  White Colour Shell",
-                   "3\" Silver Colour Shell", 
+                   "3\" Silver Colour Shell",
                    "3\"  Yellow Colour Shell",
                    "3\" Green Colour Shell",
                    "3\" Red Colour Shell",
@@ -209,13 +213,14 @@ const productCatalog: ProductCatalog = {
           { src: "", label: "3\"  Crackling Shell" },
         ],
       },
-      '4\'': {
-        slug: "4'",
+      '4-inch': {
+        slug: "4-inch",
         name: "4'' Magic Bombs",
         longDesc:
           "The 4' Inch Magic Bombs line offers mid-range power with balanced height and spread, pairing bright flashes with smooth colour transitions across the sky.",
-          variants: ["4\"  White Colour Shell",
-                     "4\" Silver Colour Shell", 
+        image: "/images/all 4.jpg",
+        variants: ["4\"  White Colour Shell",
+                     "4\" Silver Colour Shell",
                      "4\" Yellow Colour Shell",
                      "4\" Green Colour Shell",
                      "4\" Red Colour Shell",
@@ -233,13 +238,14 @@ const productCatalog: ProductCatalog = {
             { src: "", label: "4\"  Crackling Shell" },
           ],
       },
-      '6\'': {
-        slug: "6'",
+      '6-inch': {
+        slug: "6-inch",
         name: "6'' Magic Bombs",
         longDesc:
           "The 6' Inch Magic Bombs line is built for maximum impact—larger bursts, longer trails, and a commanding presence for festival finales and grand celebrations.",
+        image: "/images/all 6.jpg",
         variants: ["6\"  White Colour Shell",
-                   "6\" Silver Colour Shell", 
+                   "6\" Silver Colour Shell",
                    "6\" Yellow Colour Shell",
                    "6\" Green Colour Shell",
                    "6\" Red Colour Shell",
@@ -260,8 +266,7 @@ const productCatalog: ProductCatalog = {
     },
     howItWorks:
       "Magic Bombs ignite from the ground and release rapid sequences of coloured sparks and bursts. Each product line is tuned for a different scale and intensity, so you can mix lines for a layered, professional display.",
-    image:
-      "https://images.pexels.com/photos/1721172/pexels-photo-1721172.jpeg?auto=compress&cs=tinysrgb&w=600",
+    
     galleryImages: [],
   },
 };
