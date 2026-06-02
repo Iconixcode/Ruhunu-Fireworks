@@ -12,9 +12,9 @@ import { colors } from "@/src/constants/colors";
 const contactDetails = [
   {
     title: "Phone Number",
-    value: "071 2293300",
+    value: "070-2517265",
     icon: Phone,
-    href: "tel:0712293300",
+    href: "tel:0702517265",
   },
   {
     title: "Whatsapp",
@@ -32,7 +32,7 @@ const contactDetails = [
     title: "Location",
     value: "Matara,Sri Lanka",
     icon: MapPin,
-    href: "https://www.google.com/maps/search/?api=1&query=Matara%2CSri%20Lanka",
+    href: "https://share.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.544444444444!2d80.63333333333333!3d6.926666666666667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTUnMzAuNSJF!5e0!3m2!1sen!2slk!4v1612345678901!5m2!1sen!2slk",
   },
 ];
 
