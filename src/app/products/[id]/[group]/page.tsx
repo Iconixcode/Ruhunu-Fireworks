@@ -62,14 +62,14 @@ export default async function ProductGroupPage({
           <div className="mb-8 flex flex-col gap-8 lg:flex-row">
             <div className="product-detail-animate flex-shrink-0">
               <Image
-                src={product.image}
+                src={subpage.image ?? product.image}
                 alt={pageTitle}
-                width={500}
-                height={500}
+                width={320}
+                height={320}
                 priority
-                sizes="600px"
-                className="h-full rounded-2xl object-cover"
-                style={{ minHeight: "680px" }}
+                sizes="320px"
+                className="rounded-2xl object-cover h-auto"
+                style={{ height: "auto" }}
               />
             </div>
 
