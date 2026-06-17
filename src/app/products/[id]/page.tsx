@@ -50,6 +50,7 @@ export default async function ProductDetailPage({
   // If you'd prefer to hide them entirely, change the filter to:
   //   const galleryItems = product.galleryImages.filter(({ src }) => src.trim());
   const galleryItems = product.galleryImages;
+  const isAkasaFrame = productId === 1;
 
   return (
     <main className="min-h-screen bg-[#000211] pt-32 sm:pt-36">
@@ -70,18 +71,46 @@ export default async function ProductDetailPage({
             {product.name}
           </h1>
 
-          <div className="mb-8 flex flex-col gap-8 lg:flex-row">
-            <div className="product-detail-animate flex-shrink-0">
-              <Image
-                src={product.image}
-                alt={product.name}
-                width={222}
-                height={222}
-                priority
-                sizes="222px"
-                className="rounded-2xl object-cover h-auto"
-                style={{ height: "auto" }}
-              />
+          <div
+            className={`mb-8 flex flex-col gap-8 lg:flex-row${isAkasaFrame ? " lg:items-stretch" : ""}`}
+          >
+            <div
+              className={`product-detail-animate flex-shrink-0${isAkasaFrame ? " lg:w-[360px]" : ""}`}
+            >
+              {isAkasaFrame ? (
+                <>
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={360}
+                    height={360}
+                    priority
+                    sizes="360px"
+                    className="h-auto w-full max-w-[360px] rounded-2xl object-cover lg:hidden"
+                  />
+                  <div className="relative hidden h-full w-[360px] lg:block">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      priority
+                      sizes="360px"
+                      className="rounded-2xl object-cover"
+                    />
+                  </div>
+                </>
+              ) : (
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={222}
+                  height={222}
+                  priority
+                  sizes="222px"
+                  className="h-auto rounded-2xl object-cover"
+                  style={{ height: "auto" }}
+                />
+              )}
             </div>
 
             <div className="product-detail-animate relative flex-1 overflow-hidden rounded-2xl border border-white/40 bg-[#080C17] px-6 py-7 md:px-8">
