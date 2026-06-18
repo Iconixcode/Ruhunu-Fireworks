@@ -95,7 +95,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <Container>
         <nav
-          className="mt-3 rounded-4xl py-2 pl-2 pr-3 sm:mt-4 sm:pl-3 sm:pr-5 md:pl-4 md:pr-6"
+          className="mt-2 rounded-4xl py-1 pl-2 pr-3 sm:mt-2 sm:pl-3 sm:pr-5 md:pl-4 md:pr-6"
           style={{
             background:
               "linear-gradient(120deg, rgba(9, 21, 36, 0.82), rgba(13, 28, 45, 0.66))",
@@ -117,7 +117,8 @@ export default function Navbar() {
                 width={234}
                 height={56}
                 sizes="(max-width: 640px) 140px, (max-width: 768px) 168px, 234px"
-                className="h-10 w-auto object-contain object-left sm:h-12 md:h-14"
+                className="h-8 w-auto object-contain object-left sm:h-9 md:h-10"
+                style={{ width: "auto", height: "90px" }}
                 priority
               />
             </Link>
@@ -131,7 +132,7 @@ export default function Navbar() {
                     key={item.label}
                     href={item.href}
                     onClick={() => handleNavClick(item.href)}
-                    className="group relative px-1 py-2 text-[0.95rem] font-medium transition duration-300 xl:text-md"
+                    className="group relative px-1 py-1 text-[0.95rem] font-medium transition duration-300 xl:text-md"
                     style={{ color: "rgba(255, 255, 255, 0.82)" }}
                   >
                     <span
@@ -169,7 +170,7 @@ export default function Navbar() {
               aria-label="Toggle navigation menu"
               aria-expanded={isOpen}
               onClick={() => setIsOpen((prev) => !prev)}
-              className="ml-auto flex h-10 w-10 shrink-0 items-center justify-center text-white transition duration-300 hover:text-[#ffc786] lg:hidden"
+              className="ml-auto flex h-9 w-9 shrink-0 items-center justify-center text-white transition duration-300 hover:text-[#ffc786] lg:hidden"
             >
               <span className="relative flex h-5 w-5 items-center justify-center">
                 <Menu

@@ -18,9 +18,9 @@ const contactDetails = [
   },
   {
     title: "Whatsapp",
-    value: "072 2293300",
+    value: "070-2517265",
     icon: MessageCircle,
-    href: "https://wa.me/94722293300",
+    href: "https://wa.me/94702516265",
   },
   {
     title: "Email Address",
@@ -32,7 +32,7 @@ const contactDetails = [
     title: "Location",
     value: "Matara,Sri Lanka",
     icon: MapPin,
-    href: "https://share.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.544444444444!2d80.63333333333333!3d6.926666666666667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTUnMzAuNSJF!5e0!3m2!1sen!2slk!4v1612345678901!5m2!1sen!2slk",
+    href: "https://maps.app.goo.gl/4ew86aUFdbLmhcjB7",
   },
 ];
 
