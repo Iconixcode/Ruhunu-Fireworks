@@ -169,12 +169,12 @@ const productCatalog: ProductCatalog = {
     ],
   },
   5: {
-    name: "Magic Bombs",
+    name: "Magic Shell",
     shortDesc: "A ground fountain that sprays colorful sparks in a peacock fan shape.",
     longDesc:
-      "Magic Bombs is a versatile ground firework range offering bold bursts and vibrant effects. Choose a product line below to explore variants and watch each one in the gallery.",
+      "Magic Shell is a versatile ground firework range offering bold bursts and vibrant effects. Choose a product line below to explore variants and watch each one in the gallery.",
     specs: {
-      duration: "50-70 seconds",
+      duration: "50-70 seconds",    
       height: "8-12 feet",
       effects: "Fan-shaped spark spray",
       shots: "Continuous fountain",
@@ -182,17 +182,17 @@ const productCatalog: ProductCatalog = {
     image:
       "/images/magic bomb all.png",
     variantGroups: [
-      { name: "3'' Magic Bombs", href: "/products/5/3-inch" },
-      { name: "4'' Magic Bombs", href: "/products/5/4-inch" },
-      { name: "6'' Magic Bombs", href: "/products/5/6-inch" },
+      { name: "3'' Magic Shell", href: "/products/5/3-inch" },
+      { name: "4'' Magic Shell", href: "/products/5/4-inch" },
+      { name: "6'' Magic Shell", href: "/products/5/6-inch" },
     ],
 
     subpages: {
       '3-inch': {
         slug: "3-inch",
-        name: "3'' Magic Bombs  ",
+        name: "3'' Magic Shell  ",
         longDesc:
-          "The 3' Inch Magic Bombs line delivers compact ground bursts with vivid colour and crisp timing—ideal for smaller displays and layered show sequences.",
+          "The 3' Inch Magic Shell line delivers compact ground bursts with vivid colour and crisp timing—ideal for smaller displays and layered show sequences.",
         image: "/images/all 3.jpg",
         variants: ["3\"  White Colour Shell",
                    "3\" Silver Colour Shell",
@@ -215,9 +215,9 @@ const productCatalog: ProductCatalog = {
       },
       '4-inch': {
         slug: "4-inch",
-        name: "4'' Magic Bombs",
+        name: "4'' Magic Shell",
         longDesc:
-          "The 4' Inch Magic Bombs line offers mid-range power with balanced height and spread, pairing bright flashes with smooth colour transitions across the sky.",
+          "The 4' Inch Magic Shell line offers mid-range power with balanced height and spread, pairing bright flashes with smooth colour transitions across the sky.",
         image: "/images/all 4.jpg",
         variants: ["4\"  White Colour Shell",
                      "4\" Silver Colour Shell",
@@ -240,9 +240,9 @@ const productCatalog: ProductCatalog = {
       },
       '6-inch': {
         slug: "6-inch",
-        name: "6'' Magic Bombs",
+        name: "6'' Magic Shell",
         longDesc:
-          "The 6' Inch Magic Bombs line is built for maximum impact—larger bursts, longer trails, and a commanding presence for festival finales and grand celebrations.",
+          "The 6' Inch Magic Shell line is built for maximum impact—larger bursts, longer trails, and a commanding presence for festival finales and grand celebrations.",
         image: "/images/all 6.jpg",
         variants: ["6\"  White Colour Shell",
                    "6\" Silver Colour Shell",
@@ -265,7 +265,7 @@ const productCatalog: ProductCatalog = {
       },
     },
     howItWorks:
-      "Magic Bombs ignite from the ground and release rapid sequences of coloured sparks and bursts. Each product line is tuned for a different scale and intensity, so you can mix lines for a layered, professional display.",
+      "Magic Shell ignite from the ground and release rapid sequences of coloured sparks and bursts. Each product line is tuned for a different scale and intensity, so you can mix lines for a layered, professional display.",
     
     galleryImages: [],
   },
