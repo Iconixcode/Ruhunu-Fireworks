@@ -108,7 +108,7 @@ export default async function ProductDetailPage({
                   priority
                   sizes="222px"
                   className="h-auto rounded-2xl object-cover"
-                  style={{ height: "auto" }}
+                  style={{ width: "auto", height: "auto" }}
                 />
               )}
             </div>

@@ -27,13 +27,13 @@ const storeLinks = [
 const contactDetails = [
   {
     icon: Phone,
-    text: "071 2293300",
-    href: "tel:0712293300",
+    text: "0702516265",
+    href: "tel:0702516265",
   },
   {
     icon: FaWhatsapp,
-    text: "072 2293300",
-    href: "https://wa.me/94722293300",
+    text: "0702516265",
+    href: "https://wa.me/94702516265",
   },
   {
     icon: Mail,
@@ -43,7 +43,7 @@ const contactDetails = [
   {
     icon: MapPin,
     text: "Matara,Sri Lanka",
-    href: "https://www.google.com/maps/search/?api=1&query=Matara%2CSri%20Lanka",
+    href: "https://maps.app.goo.gl/aaNQcaFqjMk42ZQo9",
   },
 ];
 
@@ -78,7 +78,7 @@ export default function FooterSection() {
 
               <div className="mt-5 flex items-center gap-2.5">
                 <Link
-                  href="#"
+                  href="https://www.facebook.com/share/17RC5Pcw77/?mibextid=wwXIfr"
                   aria-label="Facebook"
                   className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1877F2] text-white transition duration-300 hover:scale-110 hover:shadow-[0_6px_14px_rgba(24,119,242,0.45)]"
                 >
@@ -140,7 +140,7 @@ export default function FooterSection() {
                   if (item.href) {
                     return (
                       <a
-                        key={item.text}
+                        key={item.href}
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -156,7 +156,7 @@ export default function FooterSection() {
 
                   return (
                     <div
-                      key={item.text}
+                      key={item.href ?? item.text}
                       className="flex items-center gap-5 text-white/85"
                     >
                       <Icon className="h-4 w-4 shrink-0 text-white" />
